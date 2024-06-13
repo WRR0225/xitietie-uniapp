@@ -38,3 +38,11 @@ export const postShopInfoAPI = (postShopInfoParam) => {
 		data: postShopInfoParam
 	})
 }
+
+export const postShopSearchAPI = (postShopSearchParam) => {
+	return http({
+		method: 'POST',
+		url: '/api/service-smc/grayapi/search/shop-page',
+		data: postShopSearchParam
+	})
+}
