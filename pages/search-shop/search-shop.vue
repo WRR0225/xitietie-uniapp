@@ -1,15 +1,24 @@
 <template>
 	<view class="search-bar">
-		<uni-search-bar @confirm="search" @input="inputSearch" @cancel="cancelSearch" placeholder='请输入门店或地址关键字'
-			:radius="20" clearButton="always" :focus="true"></uni-search-bar>
+		<uni-search-bar @confirm="search" @input="inputSearch" @cancel="cancelSearch" v-model="searchValue"
+			placeholder='请输入门店或地址关键字' :radius="20" clearButton="always" :focus="true"></uni-search-bar>
 	</view>
 	<view class="res-list">
-		<view class="item" v-for="item in searchResultList" :key="item.id">
-			<view class="name">
-				{{item.name}} · {{item.province}}
+		<view v-if="searchValue">
+			<view v-if="searchResultList.length>0">
+				<view class="item" v-for="item in searchResultList" :key="item.id" @click="shopCardClick(item)">
+					<view class="title">
+						{{item.name}} · {{item.province}}
+					</view>
+					<view class="address">
+						{{item.address}}
+					</view>
+				</view>
 			</view>
-			<view class="address">
-				{{item.address}}
+			<view v-else>
+				<view class="empty">
+					此关键词无匹配门店
+				</view>
 			</view>
 		</view>
 	</view>
@@ -21,6 +30,8 @@
 	import _ from 'lodash'
 	import { postShopSearchAPI } from '../../api/shop';
 	import { ref } from 'vue';
+	
+	const searchValue =ref('')
 
 	const cancelSearch = () => {
 		uni.navigateBack()
@@ -44,8 +55,16 @@
 		postShopSearchParam.value.name = e
 		if (postShopSearchParam.value.name != '') {
 			postShopSearch()
+			console.log('当前搜索关键词'+searchValue.value)
 		}
 	}, 1000)
+
+	//门店项点击事件
+	const shopCardClick = (item) => {
+		uni.navigateTo({
+			url: `/pages/shop-info/shop-info?shopId=${item.id}`
+		});
+	}
 </script>
 
 <style lang="scss">
@@ -57,7 +76,7 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 
-		.name {
+		.title {
 			font-weight: bold;
 		}
 
@@ -69,5 +88,11 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+	}
+
+	.empty {
+		display: flex;
+		justify-content: center;
+		margin-top: 200px;
 	}
 </style>
