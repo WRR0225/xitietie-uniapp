@@ -208,6 +208,9 @@
 				height: calc(100vh - 118px);
 				overflow-y: scroll;
 
+				::-webkit-scrollbar {
+					display: none;
+				}
 
 				.tietie-card-box {
 					// background-color: aquamarine;
