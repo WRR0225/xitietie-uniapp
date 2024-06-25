@@ -16,8 +16,8 @@
 				</view>
 			</view>
 			<view v-else>
-				<view class="empty">
-					此关键词无匹配门店
+				<view class="message">
+					{{message}}
 				</view>
 			</view>
 		</view>
@@ -30,8 +30,10 @@
 	import _ from 'lodash'
 	import { postShopSearchAPI } from '../../api/shop';
 	import { ref } from 'vue';
-	
-	const searchValue =ref('')
+
+	const message = ref('正在搜索中，请稍后')
+
+	const searchValue = ref('')
 
 	const cancelSearch = () => {
 		uni.navigateBack()
@@ -48,6 +50,10 @@
 		const res = await postShopSearchAPI(postShopSearchParam.value)
 		console.log(res.data.list)
 		searchResultList.value = res.data.list
+		if (Array.isArray(res.data.list) && res.data.list.length === 0) {
+			message.value="此关键字无匹配门店"
+		}
+		
 	}
 
 	//输入框值变化防抖请求
@@ -55,7 +61,7 @@
 		postShopSearchParam.value.name = e
 		if (postShopSearchParam.value.name != '') {
 			postShopSearch()
-			console.log('当前搜索关键词'+searchValue.value)
+			console.log('当前搜索关键词：' + searchValue.value)
 		}
 	}, 1000)
 
@@ -90,7 +96,7 @@
 		}
 	}
 
-	.empty {
+	.message {
 		display: flex;
 		justify-content: center;
 		margin-top: 200px;
