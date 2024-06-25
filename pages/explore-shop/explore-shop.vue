@@ -37,7 +37,8 @@
 				<!-- 待开业门店 -->
 				<ShopList v-if="active === 0" :list="filterShopList" />
 				<!-- 试营业门店 -->
-				<ShopList v-if="active === 1" :list="openShopList" />
+				<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
+				<TryRun v-if="active === 1" />
 				<!-- 全部门店 -->
 				<ShopList v-if="active === 2" :list="shopList" />
 			</view>
@@ -58,6 +59,7 @@
 		ref
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
+	import TryRun from './component/TryRun.vue';
 	// ---------------------------------------------------------------------------------------------------
 
 	//控制骨架屏/加载gif
@@ -104,12 +106,12 @@
 		shopList.value = processShopListData(res.data.list)
 		cityName.value = res.data.list[0].city
 		filterShopList.value = shopList.value.filter(item => item.is_open === false);
-		openShopList.value= shopList.value.filter(item => item.is_open === true);
+		openShopList.value = shopList.value.filter(item => item.is_open === true);
 		//请求到数据后销毁骨架屏
 		isLoading.value = false
 
 		console.log(shopList.value);
-		console.log(filterShopList);
+		console.log(openShopList.value);
 	}
 
 	//tab组件所需数组
@@ -151,22 +153,22 @@
 		// background-color: #eeeff8;
 		padding-top: 96px; // 调整填充顶部，避免内容被固定元素遮挡（52px + 44px）
 	}
-	
+
 	.tab {
-			position: fixed;
-			top: 0;
-			width: 100%;
-			z-index: 10; // 确保层级高于其他元素
-			background-color: white; // 根据需要设置背景色
-		}
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 10; // 确保层级高于其他元素
+		background-color: white; // 根据需要设置背景色
+	}
 
 
 	.navbar-diy {
 		position: fixed;
-				top: 44px; // 紧跟在 tab 之后
-				width: 100%;
-				z-index: 10; // 确保层级高于其他元素
-		
+		top: 44px; // 紧跟在 tab 之后
+		width: 100%;
+		z-index: 10; // 确保层级高于其他元素
+
 		height: 52px;
 		background-color: #fff;
 		border-bottom: 2px solid #a5a5a5;
@@ -206,5 +208,4 @@
 			}
 		}
 	}
-
 </style>

@@ -39,10 +39,23 @@ export const postShopInfoAPI = (postShopInfoParam) => {
 	})
 }
 
+/**
+ * 使用关键字搜索门店
+ */
 export const postShopSearchAPI = (postShopSearchParam) => {
 	return http({
 		method: 'POST',
 		url: '/api/service-smc/grayapi/search/shop-page',
 		data: postShopSearchParam
+	})
+}
+
+/**
+ * 门店点单页banner-用于检索是否在试营业
+ */
+export const getTryRunShopAPI = (id) => {
+	return http({
+		method: 'GET',
+		url: `/api/service-portal/vip/openapi/v3/ads?shop_id=${id}`,
 	})
 }
