@@ -28,7 +28,7 @@
 		<view class="empty">
 			<img class="image" src="./no_data.png" />
 			<view class="text">
-				当前城市暂无待开业门店<br>
+				当前城市暂无匹配门店<br>
 				看看其他城市吧~
 			</view>
 		</view>

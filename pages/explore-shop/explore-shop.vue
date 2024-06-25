@@ -36,8 +36,10 @@
 			<view :key="active" class="tab-content">
 				<!-- 待开业门店 -->
 				<ShopList v-if="active === 0" :list="filterShopList" />
+				<!-- 试营业门店 -->
+				<ShopList v-if="active === 1" :list="openShopList" />
 				<!-- 全部门店 -->
-				<ShopList v-else="active === 1" :list="shopList" />
+				<ShopList v-if="active === 2" :list="shopList" />
 			</view>
 		</view>
 	</view>
@@ -83,6 +85,8 @@
 	const shopList = ref([])
 	const cityName = ref('')
 	const filterShopList = ref([])
+	const openShopList = ref([])
+	// const tryRunShopList = ref([])
 
 	// 处理接口返回数据，确保符合ShopItem类型及符合v-for遍历结构
 	const processShopListData = (data) => {
@@ -100,6 +104,7 @@
 		shopList.value = processShopListData(res.data.list)
 		cityName.value = res.data.list[0].city
 		filterShopList.value = shopList.value.filter(item => item.is_open === false);
+		openShopList.value= shopList.value.filter(item => item.is_open === true);
 		//请求到数据后销毁骨架屏
 		isLoading.value = false
 
@@ -114,16 +119,20 @@
 			value: 0,
 		},
 		{
-			name: '全部门店',
+			name: '试营业门店',
 			value: 1,
+		},
+		{
+			name: '全部门店',
+			value: 2,
 		}]
-		//tab默认选择
+	//tab默认选择
 	const active = ref(0)
-	
+
 	//点击搜索框
-	const clickSearchArea =()=>{
+	const clickSearchArea = () => {
 		uni.navigateTo({
-			url:'/pages/search-shop/search-shop'
+			url: '/pages/search-shop/search-shop'
 		})
 	}
 	// ---------------------------------------------------------------------------------------------------
@@ -140,9 +149,24 @@
 <style scoped lang="scss">
 	.background {
 		// background-color: #eeeff8;
+		padding-top: 96px; // 调整填充顶部，避免内容被固定元素遮挡（52px + 44px）
 	}
+	
+	.tab {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 10; // 确保层级高于其他元素
+			background-color: white; // 根据需要设置背景色
+		}
+
 
 	.navbar-diy {
+		position: fixed;
+				top: 44px; // 紧跟在 tab 之后
+				width: 100%;
+				z-index: 10; // 确保层级高于其他元素
+		
 		height: 52px;
 		background-color: #fff;
 		border-bottom: 2px solid #a5a5a5;
@@ -165,7 +189,7 @@
 		}
 
 		.right {
-			.search{
+			.search {
 				width: 80px;
 				height: 30px;
 				margin-right: 16px;
@@ -174,11 +198,13 @@
 				justify-content: center;
 				align-items: center;
 				background-color: rgb(245, 245, 245);
-				.text{
+
+				.text {
 					font-size: 13px;
 					color: gray;
 				}
 			}
 		}
 	}
+
 </style>
