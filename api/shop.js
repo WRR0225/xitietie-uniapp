@@ -51,11 +51,33 @@ export const postShopSearchAPI = (postShopSearchParam) => {
 }
 
 /**
- * 门店点单页banner-用于检索是否在试营业
+ * 门店点单页banner-用于检索是否在试营业和新开业的9元店
  */
-export const getTryRunShopAPI = (id) => {
+export const getShopBannerAPI = (id) => {
 	return http({
 		method: 'GET',
 		url: `/api/service-portal/vip/openapi/v3/ads?shop_id=${id}`,
+	})
+}
+
+/**
+ * 门店点单页菜单-用于检索9元喝label
+ */
+export const postShopMenuAPI = (shopId) => {
+	return http({
+		method: 'POST',
+		url: '/api/service-activities/pms/activity/shopMenu',
+		data: {
+			"freightAmount": 0,
+			"shopBusinessIs": 0,
+			"shopId": shopId,
+			"takeawayIs": 0,
+			"spellOrderIs": 0,
+			"isStudentMember": false,
+			"level": 3
+		},
+		header: {
+			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzE5NjA3ODc4LCJuYmYiOjE3MTk2MDc4NzgsImV4cCI6MTcxOTY5NDI3OCwiaXNzIjoiaGV5dGVhIn0.KkH7akl1aL1Iq9JPfuvsA-5honFLc9b61ryUu9n_Q1k'
+		}
 	})
 }
