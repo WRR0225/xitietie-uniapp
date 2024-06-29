@@ -18,9 +18,9 @@
 						<view class="text">{{ item.address }}</view>
 					</view>
 				</view>
-				<view class="button">
+				<!-- <view class="button">
 					添加订阅
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>
@@ -73,7 +73,7 @@
 				justify-content: space-evenly;
 				flex-direction: column;
 				// background-color: skyblue;
-				width: 270px;
+				width: 340px;
 				height: 100%;
 				padding-left: 20px;
 				padding-right: 10px;
@@ -114,19 +114,19 @@
 				}
 
 				/* 使用伪元素实现右边框 */
-				&::after {
-					content: '';
-					position: absolute;
-					top: 50%;
-					right: 0;
-					transform: translateY(-50%);
-					width: 2px;
-					/* 边框宽度 */
-					height: 65%;
-					/* 边框高度，可以根据需要调整 */
-					background-color: #ebebeb;
-					/* 边框颜色 */
-				}
+				// &::after {
+				// 	content: '';
+				// 	position: absolute;
+				// 	top: 50%;
+				// 	right: 0;
+				// 	transform: translateY(-50%);
+				// 	width: 2px;
+				// 	/* 边框宽度 */
+				// 	height: 65%;
+				// 	/* 边框高度，可以根据需要调整 */
+				// 	background-color: #ebebeb;
+				// 	/* 边框颜色 */
+				// }
 			}
 
 			.button {

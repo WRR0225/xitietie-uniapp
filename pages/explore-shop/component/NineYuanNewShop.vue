@@ -40,9 +40,13 @@
 	});
 	//控制按钮显示
 	const buttonVisible = ref(true);
+	// 搜索后的提示信息
 	const foundMessage = ref('')
 	// 存储符合条件的店铺
 	const nineYuanShops = ref([]);
+	// 存储已处理的店铺数
+	const processedCount = ref(0);
+
 
 	// 响应式变量来存储目标标题
 	// const targetTitle1 = ref('');
@@ -59,6 +63,13 @@
 	const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 	const searchNineYuanShop = async () => {
+		uni.showLoading({
+			title: `${processedCount.value}/${props.openshops.length}`
+		});
+
+		setTimeout(function() {
+			uni.hideLoading();
+		}, 3000);
 		// getShopBannerData(shopId.value)
 		const batchSize = 10; // 每次发送10个请求
 		const delay = 500; // 0.5秒延迟
@@ -69,6 +80,8 @@
 				return hasLabel ? shop : null;
 			}));
 			nineYuanShops.value.push(...results.filter(shop => shop !== null));
+			processedCount.value += batch.length
+			console.log(processedCount.value + '/' + props.openshops.length)
 			await sleep(delay); // 添加延迟
 		}
 		// const results = await Promise.all(props.openshops.map(async (shop) => {

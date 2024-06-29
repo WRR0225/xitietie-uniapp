@@ -6,7 +6,7 @@
 			</button>
 		</view>
 		<view class="nickname">
-			<input type="nickname" class="weui-input" placeholder="请输入昵称" />
+			<input type="nickname" class="weui-input" placeholder="点击设置昵称" />
 		</view>
 	</view>
 </template>
