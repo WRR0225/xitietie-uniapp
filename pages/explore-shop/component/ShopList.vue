@@ -26,7 +26,7 @@
 	</view>
 	<view v-else>
 		<view class="empty">
-			<img class="image" src="./no_data.png" />
+			<img class="image" src="../img/no_data.png" />
 			<view class="text">
 				当前城市暂无匹配门店<br>
 				看看其他城市吧~
@@ -140,7 +140,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-
+		//不知道这里为什么不能用justify-content:center居中
+		// 暂时用这个↓ 
+		padding-top: 100px;
+		
 		.text {
 			display: flex;
 			flex-direction: column;

@@ -36,9 +36,9 @@
 			<view :key="active" class="tab-content">
 				<!-- 待开业门店 -->
 				<ShopList v-if="active === 0" :list="filterShopList" />
-				<!-- 试营业门店 -->
+				<!-- "9元喝"新店 -->
 				<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
-				<TryRun v-if="active === 1" />
+				<NineYuanNewShop v-if="active === 1" :openshops="openShopList" />
 				<!-- 全部门店 -->
 				<ShopList v-if="active === 2" :list="shopList" />
 			</view>
@@ -59,7 +59,7 @@
 		ref
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
-	import TryRun from './component/TryRun.vue';
+	import NineYuanNewShop from './component/NineYuanNewShop.vue';
 	// ---------------------------------------------------------------------------------------------------
 
 	//控制骨架屏/加载gif
