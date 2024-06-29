@@ -1,5 +1,5 @@
 <template>
-	<button @click="searchTryRunShop"  v-if="buttonVisible" style="margin-top: 12px;">检测</button>
+	<button @click="handleClick" v-if="buttonVisible" style="margin-top: 12px;">检测</button>
 	<!-- 	<view style="font-size: 20px;">
 		通过门店banner分析
 	</view>
@@ -9,8 +9,7 @@
 	<!-- 	<view style="font-size: 20px;margin-top: 10px;">
 		通过菜单label分析
 	</view> -->
-	<view class="found-message" v-if="labelFound">{{foundMessage}}</view>
-	<!-- <view v-else>未找到 "9元喝" 标签</view> -->
+	<view class="found-message">{{foundMessage}}</view>
 	<view class="shoplist">
 		<ShopList v-if="nineYuanShops.length" :list="nineYuanShops" />
 	</view>
@@ -39,60 +38,52 @@
 			required: true
 		}
 	});
-
-	// 店铺数据假数组
-	const shopList = [{
-			id: 169,
-			name: "深圳欢乐颂店",
-			address: "南新路3030号南山欢乐颂购物中心一层 L128号",
-			is_open: true,
-			closed_label: null
-		},
-		{
-			id: 4430,
-			name: "绍兴诸暨宝龙广场店",
-			address: "花果山水帘洞",
-			is_open: true,
-			closed_label: null
-		},
-	];
-
-const buttonVisible = ref(true);
-const labelFound = ref(false);
-const foundMessage =ref('')
-
-
+	//控制按钮显示
+	const buttonVisible = ref(true);
+	const foundMessage = ref('')
 	// 存储符合条件的店铺
 	const nineYuanShops = ref([]);
 
-	//店铺id
-	// const shopId = ref(4430)
 	// 响应式变量来存储目标标题
 	// const targetTitle1 = ref('');
 	// const targetTitle2 = ref('');
 	// const targetTitle3 = ref('');
-	//标记是否找到9元标签
 
-
-
-	const searchTryRunShop = async () => {
-		// getShopBannerData(shopId.value)
-		const results = await Promise.all(props.openshops.map(async (shop) => {
-			const hasLabel = await checkShopForLabel(shop.id);
-			return hasLabel ? shop : null;
-		}));
-		nineYuanShops.value = results.filter(shop => shop !== null);
+	const handleClick = async () => {
+		await searchNineYuanShop();
+		buttonVisible.value = false;
 		console.log(nineYuanShops.value)
-		buttonVisible.value=false
-		if(nineYuanShops.value.length > 0){
-			labelFound.value = true
-			foundMessage.value = '共找到'+nineYuanShops.value.length+'家新开业门店'
+	}
+
+	//每组请求之间添加延迟
+	const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+	const searchNineYuanShop = async () => {
+		// getShopBannerData(shopId.value)
+		const batchSize = 10; // 每次发送10个请求
+		const delay = 500; // 0.5秒延迟
+		for (let i = 0; i < props.openshops.length; i += batchSize) {
+			const batch = props.openshops.slice(i, i + batchSize);
+			const results = await Promise.all(batch.map(async (shop) => {
+				const hasLabel = await checkShopForLabel(shop.id);
+				return hasLabel ? shop : null;
+			}));
+			nineYuanShops.value.push(...results.filter(shop => shop !== null));
+			await sleep(delay); // 添加延迟
+		}
+		// const results = await Promise.all(props.openshops.map(async (shop) => {
+		// 	const hasLabel = await checkShopForLabel(shop.id);
+		// 	return hasLabel ? shop : null;
+		// }));
+		// nineYuanShops.value = results.filter(shop => shop !== null);
+		// console.log(nineYuanShops.value)
+		// buttonVisible.value = false
+		if (nineYuanShops.value.length > 0) {
+			foundMessage.value = '共找到' + nineYuanShops.value.length + '家新开业门店'
 			console.log(foundMessage.value)
-		}else{
-			labelFound.value = true
+		} else {
 			foundMessage.value = '当前城市暂无新开业门店'
 		}
-		
 	}
 
 	//获取门店Banner数据
@@ -122,7 +113,6 @@ const foundMessage =ref('')
 	}
 
 
-
 	//获取门店菜单数据 & 检查单个店铺是否有 "9元喝" 标签
 	const checkShopForLabel = async (id) => {
 		const res = await postShopMenuAPI(id)
@@ -130,6 +120,10 @@ const foundMessage =ref('')
 
 	}
 	const checkForLabel = (data) => {
+		//防止某些门店返回值里没有data或data.showRule（如某些公司园区的店）
+		if (!data || !data.showRule) {
+			return false;
+		}
 		const showRule = data.showRule;
 		for (const key in showRule) {
 			if (showRule.hasOwnProperty(key)) {
@@ -146,8 +140,8 @@ const foundMessage =ref('')
 </script>
 
 <style>
-.found-message{
-	text-align: center;
-	margin-top: 8px;
-}
+	.found-message {
+		text-align: center;
+		margin-top: 8px;
+	}
 </style>
