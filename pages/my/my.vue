@@ -2,13 +2,42 @@
 	<view class="top">
 		<view class="avatar-box">
 			<button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-				<image class="avatar" :src=avatarUrl></image>
+				<image class="avatar" :src=avatarUrl />
 			</button>
 		</view>
-		<view class="nickname">
-			<input type="nickname" class="weui-input" placeholder="点击设置昵称" />
+		<view class="info">
+			<view class="nickname">
+				<input type="nickname" class="weui-input" placeholder="设置昵称" />
+			</view>
+			<view class="id">
+				ID: 010225
+			</view>
+		</view>
+
+	</view>
+	<view class="mid">
+		<view class="iwant">
+			<view class="img">
+				图
+			</view>
+			想要
+		</view>
+		<view class="collect">
+			<view class="img">
+				图
+			</view>
+			收藏
 		</view>
 	</view>
+
+	<view class="bottom">
+		<uni-list>
+			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+				title="权限与获取信息公开" clickable @click="handleClick" />
+		</uni-list>
+	</view>
+
+
 </template>
 
 <script setup>
@@ -26,20 +55,40 @@
 		} = e.detail
 		avatarUrl.value = newAvatarUrl
 	}
+
+	const handleClick = () => {
+		console.log('click!')
+		wx.openSetting({
+			withSubscriptions: true,
+			success(res) {
+				console.log(res.authSetting)
+				// res.authSetting = {
+				//   "scope.userInfo": true,
+				//   "scope.userLocation": true
+				// }
+			},
+			fail(err) {
+				console.error(err)
+			}
+		})
+	}
 </script>
 
 <style lang='scss'>
 	.top {
 		display: flex;
-		flex-direction: column;
+		/* flex-direction: column; */
 		align-items: center;
+		justify-content: center;
 
 		.avatar-box {
 			margin-top: 20px;
+			margin-left: 20px;
+
 			.avatar-wrapper {
-				
-				width: 100px;
-				height: 100px;
+
+				width: 80px;
+				height: 80px;
 				padding: 0; // 移除按钮的内边距
 				border: none; // 移除按钮的边框
 				display: flex;
@@ -55,10 +104,66 @@
 				}
 			}
 		}
-		.nickname{
-			margin-top: 20px;
-			width: 200px;
-			text-align: center;
+
+		.info {
+			margin-left: 10px;
+
+
+			.nickname {
+				margin-top: 15px;
+				margin-left: 5px;
+				width: 250px;
+				text-align: start;
+				font-size: 18px;
+				font-weight: bold;
+			}
+
+			.id {
+				width: 84px;
+				margin-top: 10px;
+				background-color: #d6d5d8;
+				border-radius: 15px;
+				padding: 4px 8px;
+
+			}
+		}
+	}
+
+	.mid {
+		margin-top: 20px;
+		height: 85px;
+		background-color: white;
+		display: flex;
+		/* align-items: center; */
+		justify-content: space-evenly;
+
+		.iwant {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		.collect {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		.img {
+
+			height: 55px;
+		}
+	}
+
+	.bottom {
+		margin-top: 20px;
+
+		.uni-list-item {
+			height: 50px;
 		}
 	}
 </style>

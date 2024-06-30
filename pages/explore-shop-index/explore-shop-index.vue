@@ -1,8 +1,10 @@
 <template>
-	<view class="sub">
-		<navigator url="/pages/explore-shop/explore-shop" open-type="navigate" style="display: flex;margin-top:20px;">
-			<button>-- 探索门店 --</button>
-		</navigator>
+	<view class="container">
+			<navigator url="/pages/explore-shop/explore-shop" open-type="navigate"style="display: flex;">
+				<button>
+					-- 探索门店 --
+				</button>
+			</navigator>
 	</view>
 
 	<view></view>
@@ -13,7 +15,7 @@
 </script>
 
 <style lang="scss">
-	.sub {
+	.container {
 		height: 100vh;
 		width: 100%;
 		// background-color: aquamarine;
