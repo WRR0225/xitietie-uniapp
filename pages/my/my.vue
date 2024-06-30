@@ -33,7 +33,13 @@
 	<view class="bottom">
 		<uni-list>
 			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
-				title="权限与获取信息公开" clickable @click="handleClick" />
+				title="权限与获取信息公开" clickable @click="openSettingHandleClick" />
+			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+				title="版本迭代记录" clickable @click="handleClick" />
+				<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+					title="自愿看广告入口" clickable @click="handleClick" />
+			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+				title="关于此小程序" clickable @click="handleClick" />
 		</uni-list>
 	</view>
 
@@ -56,7 +62,7 @@
 		avatarUrl.value = newAvatarUrl
 	}
 
-	const handleClick = () => {
+	const openSettingHandleClick = () => {
 		console.log('click!')
 		wx.openSetting({
 			withSubscriptions: true,
