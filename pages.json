@@ -17,7 +17,7 @@
 		{
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "我的",
+				"navigationBarTitleText": "我的"
 				// "navigationStyle": "custom"
 			}
 		},
@@ -34,35 +34,31 @@
 			}
 		},
 		{
-			"path" : "pages/city-index/city-index",
-			"style" : 
-			{
-				"navigationBarTitleText" : "城市索引"
+			"path": "pages/city-index/city-index",
+			"style": {
+				"navigationBarTitleText": "城市索引"
 			}
 		},
 		{
-			"path" : "pages/shop-info/shop-info",
-			"style" : 
-			{
-				"navigationBarTitleText" : "门店详情"
+			"path": "pages/shop-info/shop-info",
+			"style": {
+				"navigationBarTitleText": "门店详情"
 			}
 		},
 		{
-			"path" : "pages/search-shop/search-shop",
-			"style" : 
-			{
-				"navigationBarTitleText" : "搜索门店"
+			"path": "pages/search-shop/search-shop",
+			"style": {
+				"navigationBarTitleText": "搜索门店"
 			}
 		}
 	],
 	"tabBar": {
-		"list": [
-			{
+		"list": [{
 				"text": "首页",
 				"pagePath": "pages/home/home",
 				"iconPath": "./static/Jigsaw.png",
 				"selectedIconPath": "./static/Jigsaw-select.png"
-				
+
 			},
 			{
 				"text": "探索门店",

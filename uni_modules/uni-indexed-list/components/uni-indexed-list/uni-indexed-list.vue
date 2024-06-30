@@ -6,6 +6,31 @@
 			<!-- #endif -->
 				<!-- #ifndef APP-NVUE -->
 				<scroll-view :scroll-into-view="scrollViewId" class="uni-indexed-list__scroll" scroll-y>
+					<view class="hot-city">
+						<view class="title">
+							热门城市
+						</view>
+						<view class="hot-city-wrapper">
+							<view class="hot-city-item" @click="onHotCityClick(156440300)">
+								<text class="hot-city-text">深圳市</text>
+							</view>
+							<view class="hot-city-item" @click="onHotCityClick(156310000)">
+								<text class="hot-city-text">上海市</text>
+							</view>
+							<view class="hot-city-item" @click="onHotCityClick(156110000)">
+								<text class="hot-city-text">北京市</text>
+							</view>
+							<view class="hot-city-item" @click="onHotCityClick(156440100)">
+								<text class="hot-city-text">广州市</text>
+							</view>
+							<view class="hot-city-item" @click="onHotCityClick(156330100)">
+								<text class="hot-city-text">杭州市</text>
+							</view>
+							<view class="hot-city-item" @click="onHotCityClick(156510100)">
+								<text class="hot-city-text">成都市</text>
+							</view>
+						</view>
+					</view>
 					<view v-for="(list, idx) in lists" :key="idx" :id="'uni-indexed-list-' + idx">
 					<!-- #endif -->
 						<indexed-list-item :list="list" :loaded="loaded" :idx="idx" :showSelect="showSelect"
@@ -32,7 +57,7 @@
 		</view>
 	</view>
 </template>
-<script>
+<script >
 	import indexedListItem from './uni-indexed-list-item.vue'
 	// #ifdef APP-NVUE
 	const dom = weex.requireModule('dom');
@@ -114,7 +139,8 @@
 				scrollViewId: '',
 				touchmovable: true,
 				loaded: false,
-				isPC: false
+				isPC: false,
+
 			}
 		},
 		watch: {
@@ -137,6 +163,11 @@
 			}, 300);
 		},
 		methods: {
+			onHotCityClick(cityid) {
+				uni.navigateTo({
+					url: `/pages/explore-shop/explore-shop?selectedCityId=${cityid}`
+				});
+			},
 			setList() {
 				let index = 0;
 				this.lists = []
@@ -284,6 +315,36 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.hot-city {
+		.title {
+			margin-left: 10px;
+		}
+	
+		.hot-city-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			padding: 10px;
+			justify-content: space-between;
+			background-color: rgb(247, 247, 247);
+	
+			.hot-city-item {
+				flex: 0 0 30%;
+				text-align: center;
+				background-color: #f0f0f0;
+				border-radius: 3px;
+				height: 32px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+	
+				.hot-city-text {
+					font-size: 14px;
+					color: #191919;
+				}
+			}
+		}
+	}
 	.uni-indexed-list {
 		position: absolute;
 		left: 0;

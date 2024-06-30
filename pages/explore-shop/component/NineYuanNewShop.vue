@@ -92,7 +92,7 @@
 		// console.log(nineYuanShops.value)
 		// buttonVisible.value = false
 		if (nineYuanShops.value.length > 0) {
-			foundMessage.value = '共找到' + nineYuanShops.value.length + '家新开业门店'
+			foundMessage.value = '共找到' + nineYuanShops.value.length + '家新开业门店\n实际情况可在“喜茶GO”官方小程序内核实'
 			console.log(foundMessage.value)
 		} else {
 			foundMessage.value = '当前城市暂无新开业门店'

@@ -10,14 +10,17 @@
 				    }" :data="tablist" v-model="active" height="44">
 			</zb-tab>
 		</view>
-
+		<!-- 热门城市 & 历史查询 -->
+		<!-- 因为uni-indexed-list组件过于难调教，所以索性只能这么写 -->
+		<!-- <view v-if="active === 0">
+			<city-selector-diy />
+		</view> -->
 		<!-- 国内 -->
-		<view v-if="active === 0" class="index">
-			<!-- 此索引组件只能在外面套一层view容器 -->
-			<uni-indexed-list :options="transformedData" @click="bindClick" :show-select="false" />
-		</view>
+		<!-- 此索引组件只能在外面套一层view容器 -->
+		<uni-indexed-list v-if="active === 0" class="index" :options="transformedData" @click="bindClick"
+			:show-select="false" />
 		<!-- 海外 -->
-		<view v-else-if="active === 1">
+		<view v-if="active === 1">
 			海外门店
 		</view>
 
@@ -35,6 +38,7 @@
 	import {
 		postCityIndexAPI
 	} from '@/api/city';
+	import citySelectorDiy from './component/city-selector-diy.vue';
 
 	//控制骨架屏/加载gif
 	const isLoading = ref(true)
@@ -96,6 +100,7 @@
 			url: `/pages/explore-shop/explore-shop?selectedCityId=${cityId}`
 		});
 	}
+	
 
 	onLoad(() => {
 		console.log('city-index onLoad');

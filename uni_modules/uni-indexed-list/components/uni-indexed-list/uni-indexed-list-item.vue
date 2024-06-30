@@ -1,14 +1,19 @@
 <template>
 	<view>
+		<!-- 原有的索引列表 -->
 		<view v-if="loaded || list.itemIndex < 15" class="uni-indexed-list__title-wrapper">
 			<text v-if="list.items && list.items.length > 0" class="uni-indexed-list__title">{{ list.key }}</text>
 		</view>
-		<view v-if="(loaded || list.itemIndex < 15) && list.items && list.items.length > 0" class="uni-indexed-list__list">
-			<view v-for="(item, index) in list.items" :key="index" class="uni-indexed-list__item" hover-class="uni-indexed-list__item--hover">
+		<view v-if="(loaded || list.itemIndex < 15) && list.items && list.items.length > 0"
+			class="uni-indexed-list__list">
+			<view v-for="(item, index) in list.items" :key="index" class="uni-indexed-list__item"
+				hover-class="uni-indexed-list__item--hover">
 				<view class="uni-indexed-list__item-container" @click="onClick(idx, index)">
-					<view class="uni-indexed-list__item-border" :class="{'uni-indexed-list__item-border--last':index===list.items.length-1}">
+					<view class="uni-indexed-list__item-border"
+						:class="{'uni-indexed-list__item-border--last':index===list.items.length-1}">
 						<view v-if="showSelect" style="margin-right: 20rpx;">
-							<uni-icons :type="item.checked ? 'checkbox-filled' : 'circle'" :color="item.checked ? '#007aff' : '#C0C0C0'" size="24" />
+							<uni-icons :type="item.checked ? 'checkbox-filled' : 'circle'"
+								:color="item.checked ? '#007aff' : '#C0C0C0'" size="24" />
 						</view>
 						<text class="uni-indexed-list__item-content">{{ item.name }}</text>
 					</view>
@@ -21,7 +26,7 @@
 <script>
 	export default {
 		name: 'UniIndexedList',
-		emits:['itemClick'],
+		emits: ['itemClick'],
 		props: {
 			loaded: {
 				type: Boolean,
@@ -42,12 +47,13 @@
 				default: false
 			}
 		},
+
 		methods: {
 			onClick(idx, index) {
 				this.$emit("itemClick", {
 					idx,
 					index,
-					id: this.list.items[index].id  // 传递城市ID
+					id: this.list.items[index].id // 传递城市ID
 				})
 			}
 		}
@@ -108,7 +114,7 @@
 		padding-left: 0;
 		border-bottom-style: solid;
 		border-bottom-width: 1px;
-		border-bottom-color:  #DEDEDE;
+		border-bottom-color: #DEDEDE;
 	}
 
 	.uni-indexed-list__item-border--last {
