@@ -1,5 +1,5 @@
 <template>
-	<button @click="handleClick" v-if="buttonVisible" style="margin-top: 12px;">检测</button>
+	<button @click="handleClick" v-if="buttonVisible" style="margin-top: 12px;">检索</button>
 	<!-- 	<view style="font-size: 20px;">
 		通过门店banner分析
 	</view>
@@ -9,7 +9,16 @@
 	<!-- 	<view style="font-size: 20px;margin-top: 10px;">
 		通过菜单label分析
 	</view> -->
-	<view class="found-message">{{foundMessage}}</view>
+	<view class="found-message1">{{foundMessage}}</view>
+	<view class="found-message2" v-if="!buttonVisible">
+		实际情况可在“喜茶GO”官方小程序内选择对应门店核实
+	</view>
+<!-- 	<view v-if="buttonVisible.value=false||foundMessage.value='当前城市暂无新开业3天内的门店'">
+		可尝试对其他城市进行检索
+	</view> -->
+<!-- 	<view v-else>
+		可尝试对其他城市进行检索
+	</view> -->
 	<view class="shoplist">
 		<ShopList v-if="nineYuanShops.length" :list="nineYuanShops" />
 	</view>
@@ -63,13 +72,6 @@
 	const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 	const searchNineYuanShop = async () => {
-		uni.showLoading({
-			title: `${processedCount.value}/${props.openshops.length}`
-		});
-
-		setTimeout(function() {
-			uni.hideLoading();
-		}, 3000);
 		// getShopBannerData(shopId.value)
 		const batchSize = 10; // 每次发送10个请求
 		const delay = 500; // 0.5秒延迟
@@ -81,7 +83,14 @@
 			}));
 			nineYuanShops.value.push(...results.filter(shop => shop !== null));
 			processedCount.value += batch.length
+
 			console.log(processedCount.value + '/' + props.openshops.length)
+			uni.showToast({
+				title: `检索中${processedCount.value}/${props.openshops.length}`,
+				duration: 1500,
+				icon: 'loading'
+			});
+
 			await sleep(delay); // 添加延迟
 		}
 		// const results = await Promise.all(props.openshops.map(async (shop) => {
@@ -92,10 +101,10 @@
 		// console.log(nineYuanShops.value)
 		// buttonVisible.value = false
 		if (nineYuanShops.value.length > 0) {
-			foundMessage.value = '共找到' + nineYuanShops.value.length + '家新开业门店\n实际情况可在“喜茶GO”官方小程序内核实'
+			foundMessage.value = `共找到${nineYuanShops.value.length}家新开业门店`
 			console.log(foundMessage.value)
 		} else {
-			foundMessage.value = '当前城市暂无新开业门店'
+			foundMessage.value = '当前城市暂无新开业3天内的门店'
 		}
 	}
 
@@ -153,8 +162,17 @@
 </script>
 
 <style>
-	.found-message {
+	.found-message1 {
 		text-align: center;
-		margin-top: 8px;
+		margin-top: 14px;
+		font-size: 13px;
+		color: gray;
+	}
+
+	.found-message2 {
+		text-align: center;
+		margin-top: 4px;
+		font-size: 13px;
+		color: gray;
 	}
 </style>

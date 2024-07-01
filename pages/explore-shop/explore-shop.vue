@@ -196,7 +196,7 @@
 			
 		}
 		.title{
-			font-size: 13px;
+			font-size: 16px;
 		}
 		.placeholder{
 			width: 50px;
