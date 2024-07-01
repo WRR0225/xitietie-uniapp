@@ -1,5 +1,16 @@
 <template>
 	<view class="background">
+		<view class="custom-navigationBar">
+			<view class="back" @click="switchTab">
+				<uni-icons type="left" size="24"></uni-icons>
+			</view>
+			<view class="title">
+				探索门店
+			</view>
+			<view class="placeholder">
+				<!-- 占位 -->
+			</view>
+		</view>
 		<view class="tab">
 			<zb-tab :activeStyle="{
 			    fontWeight: 'bold',
@@ -137,13 +148,22 @@
 			url: '/pages/search-shop/search-shop'
 		})
 	}
+	
+	//自定义navigationBar返回
+	const switchTab=()=>{
+		console.log(111)
+		uni.switchTab({
+			url: '/pages/explore-shop-index/explore-shop-index'
+		});
+	}
 	// ---------------------------------------------------------------------------------------------------
 	onLoad((option) => {
 		console.log('explore-shop onLoad');
 		console.log('Selected city ID（主动选择的城市id）:', option.selectedCityId);
 
 		const selectedCityId = option.selectedCityId
-		setCity(selectedCityId)
+		setCity(selectedCityId);
+
 		// postShopListRes() 已放入setCity()
 	});
 </script>
@@ -151,10 +171,41 @@
 <style scoped lang="scss">
 	.background {
 		// background-color: #eeeff8;
+		margin-top: 100px; // 让内容向下移动50px，避免被自定义navigationBar遮挡
+
 		padding-top: 96px; // 调整填充顶部，避免内容被固定元素遮挡（52px + 44px）
 	}
 
+	.custom-navigationBar {
+		height: 100px; // 设置navigationBar高度
+		background-color: rgb(248, 248, 248);
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 10; // 确保层级高于其他元素
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding-top: 19px;
+		
+		.back{
+			width: 50px;
+			margin-left: 4px;
+			
+		}
+		.title{
+			font-size: 13px;
+		}
+		.placeholder{
+			width: 50px;
+			margin-right: 4px;
+		}
+	}
+
 	.tab {
+		margin-top: 100px; // 让tab内容向下移动50px
 		position: fixed;
 		top: 0;
 		width: 100%;
@@ -165,7 +216,7 @@
 
 	.navbar-diy {
 		position: fixed;
-		top: 44px; // 紧跟在 tab 之后
+		top: 144px; // 紧跟在 tab 之后
 		width: 100%;
 		z-index: 10; // 确保层级高于其他元素
 

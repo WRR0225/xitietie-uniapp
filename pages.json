@@ -31,6 +31,7 @@
 			"path": "pages/explore-shop/explore-shop",
 			"style": {
 				"navigationBarTitleText": "选择门店"
+				"navigationStyle": "custom"
 			}
 		},
 		{

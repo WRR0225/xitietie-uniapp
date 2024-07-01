@@ -96,7 +96,7 @@
 	const bindClick = (e) => {
 		// console.log(JSON.stringify(e))
 		const cityId = e.item.id;
-		uni.navigateTo({
+		uni.reLaunch({
 			url: `/pages/explore-shop/explore-shop?selectedCityId=${cityId}`
 		});
 	}
