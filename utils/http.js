@@ -38,7 +38,7 @@ export const http =(options) => {
       fail(err) {
         uni.showToast({
           icon: 'none',
-          title: '网络错误，换个网络试试',
+          title: '网络错误，请重新进入小程序或换个网络试试',
         })
         reject(err)
       },

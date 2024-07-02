@@ -9,9 +9,13 @@
 				<view>所以限制每个用户每天的检索次数，敬请谅解</view>
 				<view style="color:rgb(250, 173, 20);">今日剩余检索次数：2次</view>
 			</view>
-			<fui-button @click="handleClick"  style="margin-top: 6px;width: 150px; " text="检索"></fui-button>
+			<fui-button @click="handleClick" :disabled="isSearching" :loading="isSearching" size=30
+			style="margin-top: 6px;width: 225px; ">
+				{{ isSearching ? `正在检索${processedCount}/${props.openshops.length}家门店` : '检索' }}
+			</fui-button>
+
 			<!-- <fui-button >正在检索</fui-button> -->
-			
+
 		</view>
 	</view>
 	<!-- 	<view style="font-size: 20px;">
@@ -25,15 +29,15 @@
 	</view> -->
 	<view class="found-message1">{{foundMessage}}</view>
 	<view class="found-message2" v-if="!cardVisible">
-		实际情况可在“喜茶GO”官方小程序内选择对应门店核实
+		<view v-if="nineYuanShops.length">
+			实际情况可在“喜茶GO”官方小程序内选择对应门店核实
+		</view>
+		<view v-else>
+			可尝试对其他城市进行检索
+		</view>
 	</view>
-	<!-- 	<view v-if="buttonVisible.value=false||foundMessage.value='当前城市暂无新开业3天内的门店'">
-		可尝试对其他城市进行检索
-	</view> -->
-	<!-- 	<view v-else>
-		可尝试对其他城市进行检索
-	</view> -->
-	<view class="shoplist">
+
+	<view class="shoplist" v-if="!cardVisible">
 		<ShopList v-if="nineYuanShops.length" :list="nineYuanShops" />
 	</view>
 
@@ -69,6 +73,8 @@
 	const nineYuanShops = ref([]);
 	// 存储已处理的店铺数
 	const processedCount = ref(0);
+	//控制按钮文本
+	const isSearching = ref(false);
 
 
 	// 响应式变量来存储目标标题
@@ -77,6 +83,7 @@
 	// const targetTitle3 = ref('');
 
 	const handleClick = async () => {
+		isSearching.value = true;
 		await searchNineYuanShop();
 		cardVisible.value = false;
 		console.log(nineYuanShops.value)
@@ -99,11 +106,11 @@
 			processedCount.value += batch.length
 
 			console.log(processedCount.value + '/' + props.openshops.length)
-			uni.showToast({
-				title: `检索中${processedCount.value}/${props.openshops.length}`,
-				duration: 1500,
-				icon: 'loading'
-			});
+			// uni.showToast({
+			// 	title: `检索中${processedCount.value}/${props.openshops.length}`,
+			// 	duration: 1500,
+			// 	icon: 'loading'
+			// });
 
 			await sleep(delay); // 添加延迟
 		}
@@ -196,11 +203,12 @@
 				width: 64px;
 				height: 64px;
 			}
-			.text{
+
+			.text {
 				font-size: 14px;
-			
+
 				margin: 10px 0;
-				
+
 			}
 		}
 	}
