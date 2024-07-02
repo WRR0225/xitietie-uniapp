@@ -1,5 +1,19 @@
 <template>
-	<button @click="handleClick" v-if="buttonVisible" style="margin-top: 12px;">检索</button>
+	<view class="card-flex-box">
+		<view class="cue-card" v-if="cardVisible">
+			<view class="warning-image">
+				<img src="../img/warning.png" style="width: 64px;height: 64px;" />
+			</view>
+			<view class="text">
+				<view>因为此功能会在短时间内占用大量服务器资源</view>
+				<view>所以限制每个用户每天的检索次数，敬请谅解</view>
+				<view style="color:rgb(250, 173, 20);">今日剩余检索次数：2次</view>
+			</view>
+			<fui-button @click="handleClick"  style="margin-top: 6px;width: 150px; " text="检索"></fui-button>
+			<!-- <fui-button >正在检索</fui-button> -->
+			
+		</view>
+	</view>
 	<!-- 	<view style="font-size: 20px;">
 		通过门店banner分析
 	</view>
@@ -10,13 +24,13 @@
 		通过菜单label分析
 	</view> -->
 	<view class="found-message1">{{foundMessage}}</view>
-	<view class="found-message2" v-if="!buttonVisible">
+	<view class="found-message2" v-if="!cardVisible">
 		实际情况可在“喜茶GO”官方小程序内选择对应门店核实
 	</view>
-<!-- 	<view v-if="buttonVisible.value=false||foundMessage.value='当前城市暂无新开业3天内的门店'">
+	<!-- 	<view v-if="buttonVisible.value=false||foundMessage.value='当前城市暂无新开业3天内的门店'">
 		可尝试对其他城市进行检索
 	</view> -->
-<!-- 	<view v-else>
+	<!-- 	<view v-else>
 		可尝试对其他城市进行检索
 	</view> -->
 	<view class="shoplist">
@@ -48,7 +62,7 @@
 		}
 	});
 	//控制按钮显示
-	const buttonVisible = ref(true);
+	const cardVisible = ref(true);
 	// 搜索后的提示信息
 	const foundMessage = ref('')
 	// 存储符合条件的店铺
@@ -64,7 +78,7 @@
 
 	const handleClick = async () => {
 		await searchNineYuanShop();
-		buttonVisible.value = false;
+		cardVisible.value = false;
 		console.log(nineYuanShops.value)
 	}
 
@@ -161,7 +175,37 @@
 	};
 </script>
 
-<style>
+<style lang="scss">
+	.card-flex-box {
+		display: flex;
+		justify-content: center;
+
+		.cue-card {
+			width: 85%;
+			height: 230px;
+			background-color: white;
+			margin-top: 30px;
+			border-radius: 15px;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			.warning-image {
+				width: 64px;
+				height: 64px;
+			}
+			.text{
+				font-size: 14px;
+			
+				margin: 10px 0;
+				
+			}
+		}
+	}
+
+
 	.found-message1 {
 		text-align: center;
 		margin-top: 14px;
