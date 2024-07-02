@@ -77,7 +77,7 @@ export const postShopMenuAPI = (shopId) => {
 			"level": 3
 		},
 		header: {
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzE5OTAxOTQ3LCJuYmYiOjE3MTk5MDE5NDcsImV4cCI6MTcxOTk4ODM0NywiaXNzIjoiaGV5dGVhIn0.--_XAnL0bjnCPJAN5wDyR-KvUVR-HcL8zs8uZ9o-QK0'
+			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzE5OTM1NTU2LCJuYmYiOjE3MTk5MzU1NTYsImV4cCI6MTcyMDAyMTk1NiwiaXNzIjoiaGV5dGVhIn0.q6jbqhKbJ5_Zo2-Lh4cNmhBl47Xsoc5vDw3mmO2dARg'
 		}
 	})
 }

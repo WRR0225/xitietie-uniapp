@@ -20,13 +20,13 @@
 			<view class="img">
 				图
 			</view>
-			想要
+			我拥有
 		</view>
 		<view class="collect">
 			<view class="img">
 				图
 			</view>
-			收藏
+			我的收藏
 		</view>
 	</view>
 
@@ -36,10 +36,12 @@
 				title="权限与获取信息公开" clickable @click="openSettingHandleClick" />
 			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
 				title="版本迭代记录" clickable @click="handleClick" />
-				<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
-					title="自愿看广告入口" clickable @click="handleClick" />
 			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
-				title="关于此小程序" clickable @click="handleClick" />
+				title="自愿看广告入口" clickable @click="handleClick" />
+			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+				title="分享此小程序" clickable @click="handleClick" />
+			<uni-list-item class="uni-list-item" :show-extra-icon="true" showArrow :extra-icon="extraIcon"
+				title='关于"喜贴贴"' clickable @click="handleClick" />
 		</uni-list>
 	</view>
 

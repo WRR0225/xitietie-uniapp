@@ -222,9 +222,12 @@
 					padding: 0 10px;
 
 					.tietie-card {
+						width: 152px;
 						display: flex;
 						flex-direction: column;
 						margin-bottom: 20px;
+						border-radius: 15px;
+						box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 
 						.up {
 							width: 152px;
@@ -235,6 +238,7 @@
 							display: flex;
 							justify-content: center;
 							align-items: center;
+							// box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 							.image {
 								max-width: 80%;
@@ -251,6 +255,7 @@
 							display: flex;
 							justify-content: space-between;
 							align-items: center;
+							// box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 							.text {
 								margin-left: 16px;

@@ -9,19 +9,15 @@
 				    transform: 'scale(1.1)'
 				    }" :data="tablist" v-model="active" height="44">
 			</zb-tab>
-		</view>
-		<!-- 热门城市 & 历史查询 -->
-		<!-- 因为uni-indexed-list组件过于难调教，所以索性只能这么写 -->
-		<!-- <view v-if="active === 0">
-			<city-selector-diy />
-		</view> -->
+		</view>	
 		<!-- 国内 -->
 		<!-- 此索引组件只能在外面套一层view容器 -->
 		<uni-indexed-list v-if="active === 0" class="index" :options="transformedData" @click="bindClick"
 			:show-select="false" />
+			
 		<!-- 海外 -->
 		<view v-if="active === 1">
-			海外门店
+			<city-selector-diy :city-index-list="abroadAreasList" />
 		</view>
 
 	</view>
@@ -54,8 +50,9 @@
 	]
 	const active = ref(0)
 	//------------------------------------------------------------
-	const cityIndex = ref([])
 	const transformedData = ref([]);
+	// 海外城市选择组件数据
+	const abroadAreasList =ref([]);
 
 	const transformData = (data) => {
 		const groupedData = {};
@@ -85,9 +82,14 @@
 		const res = await postCityIndexAPI({
 			keyword: ""
 		});
-		const chinaAreas = res.data.china_areas;
-		transformedData.value = transformData(chinaAreas);
-		console.log('Transformed Data:', transformedData.value);
+		const chinaAreasList = res.data.china_areas;
+		//转化数据结构给国内城市索引组件
+		transformedData.value = transformData(chinaAreasList);
+		console.log('转化后的国内城市数据:', transformedData.value);
+		
+		//提供给海外城市选择组件
+		abroadAreasList.value = res.data.abroad_areas
+		console.log(abroadAreasList.value)
 
 		//请求到数据后销毁骨架屏
 		isLoading.value = false
@@ -105,6 +107,11 @@
 	onLoad(() => {
 		console.log('city-index onLoad');
 		postCityIndexRes()
+		
+		
+			
+			
+
 	});
 </script>
 

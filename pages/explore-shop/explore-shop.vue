@@ -49,7 +49,7 @@
 				<ShopList v-if="active === 0" :list="filterShopList" />
 				<!-- "9元喝"新店 -->
 				<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
-				<NineYuanNewShop v-if="active === 1" :openshops="openShopList" />
+				<NineYuanNewShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
 				<!-- 全部门店 -->
 				<ShopList v-if="active === 2" :list="shopList" />
 			</view>
@@ -151,7 +151,6 @@
 	
 	//自定义navigationBar返回
 	const switchTab=()=>{
-		console.log(111)
 		uni.switchTab({
 			url: '/pages/explore-shop-index/explore-shop-index'
 		});

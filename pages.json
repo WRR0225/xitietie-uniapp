@@ -12,7 +12,7 @@
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "贴贴图鉴"
 				// "navigationStyle": "custom"
 			}
 		},
@@ -57,7 +57,7 @@
 	],
 	"tabBar": {
 		"list": [{
-				"text": "首页",
+				"text": "贴贴图鉴",
 				"pagePath": "pages/home/home",
 				"iconPath": "./static/Jigsaw.png",
 				"selectedIconPath": "./static/Jigsaw-select.png"

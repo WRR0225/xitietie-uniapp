@@ -6,16 +6,13 @@
 			</view>
 			<view class="text">
 				<view>因为此功能会在短时间内占用大量服务器资源</view>
-				<view>所以限制每个用户每天的检索次数，敬请谅解</view>
+				<view>所以限制每个用户每日的检索次数，敬请谅解</view>
 				<view style="color:rgb(250, 173, 20);">今日剩余检索次数：2次</view>
 			</view>
 			<fui-button @click="handleClick" :disabled="isSearching" :loading="isSearching" size=30
 			style="margin-top: 6px;width: 225px; ">
 				{{ isSearching ? `正在检索${processedCount}/${props.openshops.length}家门店` : '检索' }}
 			</fui-button>
-
-			<!-- <fui-button >正在检索</fui-button> -->
-
 		</view>
 	</view>
 	<!-- 	<view style="font-size: 20px;">
@@ -63,7 +60,11 @@
 		openshops: {
 			type: Array,
 			required: true
-		}
+		},
+		cityname: {
+			type: String,
+			required: true
+		},
 	});
 	//控制按钮显示
 	const cardVisible = ref(true);
@@ -122,7 +123,7 @@
 		// console.log(nineYuanShops.value)
 		// buttonVisible.value = false
 		if (nineYuanShops.value.length > 0) {
-			foundMessage.value = `共找到${nineYuanShops.value.length}家新开业门店`
+			foundMessage.value = `${props.cityname} 共找到${nineYuanShops.value.length}家新开业门店`
 			console.log(foundMessage.value)
 		} else {
 			foundMessage.value = '当前城市暂无新开业3天内的门店'

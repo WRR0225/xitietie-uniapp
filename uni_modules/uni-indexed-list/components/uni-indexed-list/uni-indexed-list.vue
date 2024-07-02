@@ -316,6 +316,7 @@
 </script>
 <style lang="scss" scoped>
 	.hot-city {
+		margin-top: 4px;
 		.title {
 			margin-left: 10px;
 		}
