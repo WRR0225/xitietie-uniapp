@@ -2,7 +2,7 @@
 	<view class="container">
 			<navigator url="/pages/explore-shop/explore-shop" open-type="navigate"style="display: flex;">
 				<button>
-					-- 探索门店 --
+					-- 开始探索 --
 				</button>
 			</navigator>
 	</view>

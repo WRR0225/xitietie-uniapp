@@ -61,7 +61,7 @@ export const getShopBannerAPI = (id) => {
 }
 
 /**
- * 门店点单页菜单-用于检索9元喝label
+ * 门店点单页菜单-用于检索 试营业/9元喝/第二杯半价的label
  */
 export const postShopMenuAPI = (shopId) => {
 	return http({
@@ -77,7 +77,7 @@ export const postShopMenuAPI = (shopId) => {
 			"level": 3
 		},
 		header: {
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzE5OTM1NTU2LCJuYmYiOjE3MTk5MzU1NTYsImV4cCI6MTcyMDAyMTk1NiwiaXNzIjoiaGV5dGVhIn0.q6jbqhKbJ5_Zo2-Lh4cNmhBl47Xsoc5vDw3mmO2dARg'
+			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMDczMjYyLCJuYmYiOjE3MjAwNzMyNjIsImV4cCI6MTcyMDE1OTY2MiwiaXNzIjoiaGV5dGVhIn0.Am2fluak6pRYv64pSA44mUQQv4QzmLLcnbYkDzaMmMU'
 		}
 	})
 }

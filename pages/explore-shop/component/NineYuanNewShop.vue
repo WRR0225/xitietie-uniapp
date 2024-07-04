@@ -10,7 +10,7 @@
 				<view style="color:rgb(250, 173, 20);">今日剩余检索次数：2次</view>
 			</view>
 			<fui-button @click="handleClick" :disabled="isSearching" :loading="isSearching" size=30
-			style="margin-top: 6px;width: 225px; ">
+				style="margin-top: 6px;width: 225px; ">
 				{{ isSearching ? `正在检索${processedCount}/${props.openshops.length}家门店` : '检索' }}
 			</fui-button>
 		</view>
@@ -100,8 +100,11 @@
 		for (let i = 0; i < props.openshops.length; i += batchSize) {
 			const batch = props.openshops.slice(i, i + batchSize);
 			const results = await Promise.all(batch.map(async (shop) => {
-				const hasLabel = await checkShopForLabel(shop.id);
-				return hasLabel ? shop : null;
+				const label = await checkShopForLabel(shop.id);
+				return label ? {
+					...shop,
+					label: label.label
+				} : null;
 			}));
 			nineYuanShops.value.push(...results.filter(shop => shop !== null));
 			processedCount.value += batch.length
@@ -115,6 +118,16 @@
 
 			await sleep(delay); // 添加延迟
 		}
+		// 对数组进行排序，将带有“9元喝”标签的数据排在前面，“第二杯半价”的排在后面
+		nineYuanShops.value.sort((a, b) => {
+			if (a.label === '9元喝' && b.label !== '9元喝') {
+				return -1;
+			}
+			if (a.label !== '9元喝' && b.label === '9元喝') {
+				return 1;
+			}
+			return 0;
+		});
 		// const results = await Promise.all(props.openshops.map(async (shop) => {
 		// 	const hasLabel = await checkShopForLabel(shop.id);
 		// 	return hasLabel ? shop : null;
@@ -161,25 +174,32 @@
 	const checkShopForLabel = async (id) => {
 		const res = await postShopMenuAPI(id)
 		return checkForLabel(res.data);
-
 	}
+
 	const checkForLabel = (data) => {
 		//防止某些门店返回值里没有data或data.showRule（如某些公司园区的店）
 		if (!data || !data.showRule) {
-			return false;
+			return null;
 		}
 		const showRule = data.showRule;
 		for (const key in showRule) {
 			if (showRule.hasOwnProperty(key)) {
 				const ruleArray = showRule[key];
 				for (const rule of ruleArray) {
-					if (rule.label === '9元喝' || rule.productLabel === '9元喝 | 限1件') {
-						return true;
+					// rule.productLabel === '9元喝 | 限1件'
+					if (rule.label === '9元喝') {
+						return {
+							label: '9元喝'
+						};
+					} else if (rule.label === '第二杯半价') {
+						return {
+							label: '第二杯半价'
+						};
 					}
 				}
 			}
 		}
-		return false;
+		return null;
 	};
 </script>
 

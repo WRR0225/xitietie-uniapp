@@ -10,9 +10,30 @@
 						</view>
 						<uni-icons type="right" size="15" />
 					</view>
+					<!-- 标签 -->
+					<!-- 待开业 -->
 					<view class="label" v-if="item.is_open==false">
 						<view class="text">{{item.closed_label}}</view>
 					</view>
+					<!-- 试营业 | 9元喝 | 第二杯半价 -->
+					<view class="new-shop-label" v-if="item.label">
+						<!-- 9元喝 -->
+						<view class="nine-yuan" v-if="item.label==='9元喝'">
+							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
+								:padding="tagpadding" style="margin-right: 6px;">{{item.label}}</fui-tag>
+							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
+								:padding="tagpadding">开业1-3天</fui-tag>
+						</view>
+<!-- 第二杯半价 -->
+			<view class="second-half" v-if="item.label==='第二杯半价'">
+							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
+								:padding="tagpadding" style="margin-right: 6px;">{{item.label}}</fui-tag>
+							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
+								:padding="tagpadding">开业4-7天</fui-tag>
+						</view>
+
+					</view>
+					<!-- 地址 -->
 					<view class="address">
 						<uni-icons type="location" size="17" />
 						<view class="text">{{ item.address }}</view>
@@ -37,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+	const tagpadding = ['12rpx', '26rpx']
 	const props = defineProps({
 		list: {
 			type: Array,
@@ -143,7 +165,7 @@
 		//不知道这里为什么不能用justify-content:center居中
 		// 暂时用这个↓ 
 		padding-top: 100px;
-		
+
 		.text {
 			display: flex;
 			flex-direction: column;

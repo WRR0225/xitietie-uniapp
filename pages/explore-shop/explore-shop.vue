@@ -47,7 +47,7 @@
 			<view :key="active" class="tab-content">
 				<!-- 待开业门店 -->
 				<ShopList v-if="active === 0" :list="filterShopList" />
-				<!-- "9元喝"新店 -->
+				<!-- 新店开业 -->
 				<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
 				<NineYuanNewShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
 				<!-- 全部门店 -->
@@ -132,7 +132,7 @@
 			value: 0,
 		},
 		{
-			name: '"9元喝"新店',
+			name: '新店开业',
 			value: 1,
 		},
 		{
