@@ -27,17 +27,27 @@ export const postShopListAPI = (postShopListParam) => {
 }
 
 /**
- * 获取门店详情数据
- * @param data 包含要提交的店铺信息参数的对象
- * @returns 返回一个Promise对象，成功时携带服务器响应数据，失败时携带错误信息
+ * 获取门店详情数据-国内
  */
-export const postShopInfoAPI = (postShopInfoParam) => {
+export const postChinaShopInfoAPI = (postShopInfoParam) => {
 	return http({
 		method: 'POST',
 		url: '/api/service-smc/grayapi/user/closest/shop',
 		data: postShopInfoParam
 	})
 }
+
+/**
+ * 获取门店详情数据-海外
+ */
+export const postOverseasShopInfoAPI = (postShopInfoParam) => {
+	return http({
+		method: 'GET',
+		baseURL: 'https://go.heytea-co.com',
+		url: `/api/service-portal/vip/grayapi/v2/user/closest/shop?id=${postShopInfoParam.id}`,
+	})
+}
+
 
 /**
  * 使用关键字搜索门店

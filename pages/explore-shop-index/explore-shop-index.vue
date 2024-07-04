@@ -1,17 +1,33 @@
 <template>
 	<view class="container">
-			<navigator url="/pages/explore-shop/explore-shop" open-type="navigate"style="display: flex;">
-				<button>
-					-- 开始探索 --
+			<!-- <navigator url="/pages/explore-shop/explore-shop" open-type="navigate"style="display: flex;"> -->
+				<button  @click="clickDefault">
+					-- 常规探索 --
 				</button>
-			</navigator>
+			<!-- </navigator> -->
+			
+			
+				<button @click="clickTeaHouse">
+					-- 茶坊 --
+				</button>
+		
 	</view>
 
-	<view></view>
 </template>
 
 <script setup>
+	const clickDefault=()=>{
+		uni.navigateTo({
+			url: '/pages/explore-shop/explore-shop?category=default'
+		});
+	
+	}
+const clickTeaHouse=()=>{
+	uni.navigateTo({
+		url: '/pages/explore-shop/explore-shop?category=teahouse'
+	});
 
+}
 </script>
 
 <style lang="scss">

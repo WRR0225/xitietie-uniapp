@@ -19,15 +19,15 @@
 					<view class="new-shop-label" v-if="item.label">
 						<!-- 9元喝 -->
 						<view class="nine-yuan" v-if="item.label==='9元喝'">
-							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
-								:padding="tagpadding" style="margin-right: 6px;">{{item.label}}</fui-tag>
+							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f" :padding="tagpadding"
+								style="margin-right: 6px;">{{item.label}}</fui-tag>
 							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
 								:padding="tagpadding">开业1-3天</fui-tag>
 						</view>
-<!-- 第二杯半价 -->
-			<view class="second-half" v-if="item.label==='第二杯半价'">
-							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
-								:padding="tagpadding" style="margin-right: 6px;">{{item.label}}</fui-tag>
+						<!-- 第二杯半价 -->
+						<view class="second-half" v-if="item.label==='第二杯半价'">
+							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703" :padding="tagpadding"
+								style="margin-right: 6px;">{{item.label}}</fui-tag>
 							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
 								:padding="tagpadding">开业4-7天</fui-tag>
 						</view>
@@ -68,7 +68,7 @@
 
 	const shopCardClick = (item) => {
 		uni.navigateTo({
-			url: `/pages/shop-info/shop-info?shopId=${item.id}`
+			url: `/pages/shop-info/shop-info?shopId=${item.id}&isOverseas=${item.is_overseas}`
 		});
 	}
 </script>

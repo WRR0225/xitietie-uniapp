@@ -26,9 +26,10 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app';
-	import { postShopInfoAPI } from '../../api/shop';
+	import { postChinaShopInfoAPI, postOverseasShopInfoAPI } from '../../api/shop';
 	import { ref } from 'vue';
 
+	//请求参数
 	const postShopInfoParam = ref({
 		// 杭州EFC欧美广场店
 		"id": 1022,
@@ -48,18 +49,27 @@
 		}];
 	};
 
+	//存储门店详情信息
 	const shopInfo = ref([])
+	//是否为海外门店
+	const isOverseas = ref(false)
+
+	//根据点击的门店卡片是否是海外门店向不同的接口发请求
 	const postShopInfoRes = async () => {
-		const res = await postShopInfoAPI(postShopInfoParam.value)
+		const res = isOverseas.value
+			? await postOverseasShopInfoAPI(postShopInfoParam.value)
+			: await postChinaShopInfoAPI(postShopInfoParam.value);
 		shopInfo.value = processShopInfoData(res.data);
-		console.log(shopInfo.value)
+		console.log(shopInfo.value);
 	}
 
 	// ----------------------------------------------------------------------------
 	onLoad((option) => {
-		// console.log('当前选择门店ID:' + option.shopId)
 		postShopInfoParam.value.id = option.shopId
 		console.log('当前请求门店id:' + postShopInfoParam.value.id)
+		//先用!!转为布尔类型
+		isOverseas.value = !!JSON.parse(option.isOverseas);
+		console.log('当前请求门店是否为海外门店:' + isOverseas.value)
 		postShopInfoRes()
 	})
 </script>

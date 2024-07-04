@@ -11,33 +11,42 @@
 				<!-- 占位 -->
 			</view>
 		</view>
+
+		<!-- 选项卡 -->
 		<view class="tab">
-			<zb-tab :activeStyle="{
+			<view v-if="pageCategory === 'default'">
+				<zb-tab :activeStyle="{
 			    fontWeight: 'bold',
 			    transform: 'scale(1.1)'
 			    }" :data="tablist" v-model="active" height="44">
-			</zb-tab>
+				</zb-tab>
+			</view>
+			<view v-if="pageCategory === 'teahouse'"></view>
+
 		</view>
 
+		<!-- 城市门店加载完成前的东西 -->
 		<view v-if="isLoading" style="font-size: 100px;">
 			加载中...
 		</view>
 		<view v-else>
 			<!-- 城市选择器 -->
-			<view class="navbar-diy">
-				<view class="left">
-					<navigator url="/pages/city-index/city-index" open-type="navigate">
-						<view class="text">
-							{{cityName}}
-						</view>
-						<uni-icons class="icon" type="down" size="20"></uni-icons>
-					</navigator>
-				</view>
-				<view class="right">
-					<view class="search" @click="clickSearchArea">
-						<uni-icons type="search" size="20" color="gray"></uni-icons>
-						<view class="text">
-							搜索
+			<view v-if="pageCategory === 'default'">
+				<view class="navbar-diy">
+					<view class="left">
+						<navigator url="/pages/city-index/city-index" open-type="navigate">
+							<view class="text">
+								{{cityName}}
+							</view>
+							<uni-icons class="icon" type="down" size="20"></uni-icons>
+						</navigator>
+					</view>
+					<view class="right">
+						<view class="search" @click="clickSearchArea">
+							<uni-icons type="search" size="20" color="gray"></uni-icons>
+							<view class="text">
+								搜索
+							</view>
 						</view>
 					</view>
 				</view>
@@ -45,13 +54,19 @@
 
 			<!-- 门店列表 -->
 			<view :key="active" class="tab-content">
-				<!-- 待开业门店 -->
-				<ShopList v-if="active === 0" :list="filterShopList" />
-				<!-- 新店开业 -->
-				<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
-				<NineYuanNewShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
-				<!-- 全部门店 -->
-				<ShopList v-if="active === 2" :list="shopList" />
+				<view v-if="pageCategory === 'default'">
+					<!-- 待开业门店 -->
+					<ShopList v-if="active === 0" :list="closeShopList" />
+					<!-- 新店开业 -->
+					<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
+					<NineYuanNewShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
+					<!-- 全部门店 -->
+					<ShopList v-if="active === 2" :list="shopList" />
+				</view>
+				
+				<view v-if="pageCategory === 'teahouse'">
+					全国茶坊
+				</view>
 			</view>
 		</view>
 	</view>
@@ -72,6 +87,9 @@
 	import ShopList from './component/ShopList.vue';
 	import NineYuanNewShop from './component/NineYuanNewShop.vue';
 	// ---------------------------------------------------------------------------------------------------
+	// 当前页面类型 （全部|冰箱贴|茶坊|24小时营业）
+	const pageCategory = ref('all')
+
 
 	//控制骨架屏/加载gif
 	const isLoading = ref(true)
@@ -97,7 +115,7 @@
 
 	const shopList = ref([])
 	const cityName = ref('')
-	const filterShopList = ref([])
+	const closeShopList = ref([])
 	const openShopList = ref([])
 	// const tryRunShopList = ref([])
 
@@ -108,7 +126,8 @@
 			name: item.name,
 			address: item.address,
 			is_open: item.is_open,
-			closed_label: item.closed_label
+			closed_label: item.closed_label,
+			is_overseas: item.is_overseas
 		}));
 	};
 
@@ -116,7 +135,7 @@
 		const res = await postShopListAPI(postShopListParam.value)
 		shopList.value = processShopListData(res.data.list)
 		cityName.value = res.data.list[0].city
-		filterShopList.value = shopList.value.filter(item => item.is_open === false);
+		closeShopList.value = shopList.value.filter(item => item.is_open === false);
 		openShopList.value = shopList.value.filter(item => item.is_open === true);
 		//请求到数据后销毁骨架屏
 		isLoading.value = false
@@ -124,6 +143,7 @@
 		console.log(shopList.value);
 		console.log(openShopList.value);
 	}
+
 
 	//tab组件所需数组
 	const tablist = [
@@ -142,22 +162,27 @@
 	//tab默认选择
 	const active = ref(0)
 
+
+
+
 	//点击搜索框
 	const clickSearchArea = () => {
 		uni.navigateTo({
 			url: '/pages/search-shop/search-shop'
 		})
 	}
-	
+
 	//自定义navigationBar返回
-	const switchTab=()=>{
+	const switchTab = () => {
 		uni.switchTab({
 			url: '/pages/explore-shop-index/explore-shop-index'
 		});
 	}
 	// ---------------------------------------------------------------------------------------------------
 	onLoad((option) => {
-		console.log('explore-shop onLoad');
+		console.log(option);
+		pageCategory.value = String(option.category);
+
 		console.log('Selected city ID（主动选择的城市id）:', option.selectedCityId);
 
 		const selectedCityId = option.selectedCityId
@@ -188,16 +213,18 @@
 		justify-content: space-between;
 
 		padding-top: 19px;
-		
-		.back{
+
+		.back {
 			width: 50px;
 			margin-left: 4px;
-			
+
 		}
-		.title{
+
+		.title {
 			font-size: 16px;
 		}
-		.placeholder{
+
+		.placeholder {
 			width: 50px;
 			margin-right: 4px;
 		}
