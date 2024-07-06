@@ -64,7 +64,7 @@
 				</view>
 				
 				<view v-if="pageCategory === 'teahouse'">
-					全国茶坊
+					茶坊门店
 				</view>
 			</view>
 		</view>
@@ -151,11 +151,11 @@
 	//tab组件所需数组
 	const tablist = [
 		{
-			name: '待开业门店',
+			name: '待开业',
 			value: 0,
 		},
 		{
-			name: '新店开业',
+			name: '新开业&试营业',
 			value: 1,
 		},
 		{
