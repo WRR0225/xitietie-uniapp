@@ -15,10 +15,10 @@
 					<view class="label" v-if="item.is_open==false">
 						<view class="text">{{item.closed_label}}</view>
 					</view>
-					<!-- 试营业 | 9元喝 | 第二杯半价 -->
+					<!-- 试营业 | 9元喝&买一送一 | 第二杯半价 -->
 					<view class="new-shop-label" v-if="item.label">
-						<!-- 9元喝 -->
-						<view class="nine-yuan" v-if="item.label==='9元喝'">
+						<!-- 9元喝&买一送一 -->
+						<view class="nine-yuan" v-if="item.label==='9元喝'||item.label==='买一送一'">
 							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f" :padding="tagpadding"
 								style="margin-right: 6px;">{{item.label}}</fui-tag>
 							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"

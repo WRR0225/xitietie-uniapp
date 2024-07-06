@@ -71,7 +71,7 @@ export const getShopBannerAPI = (id) => {
 }
 
 /**
- * 门店点单页菜单-用于检索 试营业/9元喝/第二杯半价的label
+ * 门店点单页菜单（国内）-用于检索 试营业/9元喝/第二杯半价的label
  */
 export const postShopMenuAPI = (shopId) => {
 	return http({
@@ -83,11 +83,34 @@ export const postShopMenuAPI = (shopId) => {
 			"shopId": shopId,
 			"takeawayIs": 0,
 			"spellOrderIs": 0,
-			"isStudentMember": false,
-			"level": 3
+			// "isStudentMember": false,
+			// "level": 3
 		},
 		header: {
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMDczMjYyLCJuYmYiOjE3MjAwNzMyNjIsImV4cCI6MTcyMDE1OTY2MiwiaXNzIjoiaGV5dGVhIn0.Am2fluak6pRYv64pSA44mUQQv4QzmLLcnbYkDzaMmMU'
+			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMjU0MjMwLCJuYmYiOjE3MjAyNTQyMzAsImV4cCI6MTcyMDM0MDYzMCwiaXNzIjoiaGV5dGVhIn0.JO62E3QVqe4A96v3njVcXWkcLucgIwNNoadl01xwlnA'
+		}
+	})
+}
+
+/**
+ * 门店点单页菜单（海外）-用于检索 试营业/9元喝/第二杯半价的label
+ */
+export const postOverseasShopMenuAPI = (shopId) => {
+	return http({
+		method: 'POST',
+		baseURL: 'https://go.heytea-co.com',
+		url: '/api/service-activities/pms/activity/shopMenu',
+		data: {
+			"freightAmount": 0,
+			"shopBusinessIs": 0,
+			"shopId": shopId,
+			"takeawayIs": 0,
+			"spellOrderIs": 0,
+			// "isStudentMember": false,
+			// "level": 3
+		},
+		header: {
+			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMjU0MjMwLCJuYmYiOjE3MjAyNTQyMzAsImV4cCI6MTcyMDM0MDYzMCwiaXNzIjoiaGV5dGVhIn0.JO62E3QVqe4A96v3njVcXWkcLucgIwNNoadl01xwlnA'
 		}
 	})
 }

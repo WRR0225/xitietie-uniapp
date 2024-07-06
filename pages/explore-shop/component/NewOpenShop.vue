@@ -26,7 +26,7 @@
 	</view> -->
 	<view class="found-message1">{{foundMessage}}</view>
 	<view class="found-message2" v-if="!cardVisible">
-		<view v-if="nineYuanShops.length">
+		<view v-if="newOpenShops.length">
 			实际情况可在“喜茶GO”官方小程序内选择对应门店核实
 		</view>
 		<view v-else>
@@ -35,7 +35,7 @@
 	</view>
 
 	<view class="shoplist" v-if="!cardVisible">
-		<ShopList v-if="nineYuanShops.length" :list="nineYuanShops" />
+		<ShopList v-if="newOpenShops.length" :list="newOpenShops" />
 	</view>
 
 </template>
@@ -49,7 +49,8 @@
 	} from '@dcloudio/uni-app';
 	import {
 		getShopBannerAPI,
-		postShopMenuAPI
+		postShopMenuAPI,
+		postOverseasShopMenuAPI
 	} from '../../../api/shop';
 	import ShopList from './ShopList.vue';
 	import {
@@ -71,11 +72,12 @@
 	// 搜索后的提示信息
 	const foundMessage = ref('')
 	// 存储符合条件的店铺
-	const nineYuanShops = ref([]);
+	const newOpenShops = ref([]);
 	// 存储已处理的店铺数
 	const processedCount = ref(0);
 	//控制按钮文本
 	const isSearching = ref(false);
+
 
 
 	// 响应式变量来存储目标标题
@@ -87,7 +89,7 @@
 		isSearching.value = true;
 		await searchNineYuanShop();
 		cardVisible.value = false;
-		console.log(nineYuanShops.value)
+		console.log(newOpenShops.value)
 	}
 
 	//每组请求之间添加延迟
@@ -106,7 +108,7 @@
 					label: label.label
 				} : null;
 			}));
-			nineYuanShops.value.push(...results.filter(shop => shop !== null));
+			newOpenShops.value.push(...results.filter(shop => shop !== null));
 			processedCount.value += batch.length
 
 			console.log(processedCount.value + '/' + props.openshops.length)
@@ -119,7 +121,7 @@
 			await sleep(delay); // 添加延迟
 		}
 		// 对数组进行排序，将带有“9元喝”标签的数据排在前面，“第二杯半价”的排在后面
-		nineYuanShops.value.sort((a, b) => {
+		newOpenShops.value.sort((a, b) => {
 			if (a.label === '9元喝' && b.label !== '9元喝') {
 				return -1;
 			}
@@ -132,11 +134,11 @@
 		// 	const hasLabel = await checkShopForLabel(shop.id);
 		// 	return hasLabel ? shop : null;
 		// }));
-		// nineYuanShops.value = results.filter(shop => shop !== null);
-		// console.log(nineYuanShops.value)
+		// newOpenShops.value = results.filter(shop => shop !== null);
+		// console.log(newOpenShops.value)
 		// buttonVisible.value = false
-		if (nineYuanShops.value.length > 0) {
-			foundMessage.value = `${props.cityname} 共找到${nineYuanShops.value.length}家新开业门店`
+		if (newOpenShops.value.length > 0) {
+			foundMessage.value = `${props.cityname} 共找到${newOpenShops.value.length}家新开业门店`
 			console.log(foundMessage.value)
 		} else {
 			foundMessage.value = '当前城市暂无新开业3天内的门店'
@@ -169,11 +171,16 @@
 		}
 	}
 
-
 	//获取门店菜单数据 & 检查单个店铺是否有 "9元喝" 标签
 	const checkShopForLabel = async (id) => {
-		const res = await postShopMenuAPI(id)
-		return checkForLabel(res.data);
+		if (props.openshops[0].is_overseas) {
+			const res = await postOverseasShopMenuAPI(id)
+			return checkForLabel(res.data);
+		} else {
+			const res = await postShopMenuAPI(id)
+			return checkForLabel(res.data);
+		}
+
 	}
 
 	const checkForLabel = (data) => {
@@ -191,11 +198,16 @@
 						return {
 							label: '9元喝'
 						};
-					} else if (rule.label === '第二杯半价') {
+					} else if (rule.label === '买一送一') {
+						return {
+							label: '买一送一'
+						};
+					}else if (rule.label === '第二杯半价') {
 						return {
 							label: '第二杯半价'
 						};
 					}
+					
 				}
 			}
 		}
