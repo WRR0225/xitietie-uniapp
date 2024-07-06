@@ -22,7 +22,6 @@
 				</zb-tab>
 			</view>
 			<view v-if="pageCategory === 'teahouse'"></view>
-
 		</view>
 
 		<!-- 城市门店加载完成前的东西 -->
@@ -59,7 +58,7 @@
 					<ShopList v-if="active === 0" :list="closeShopList" />
 					<!-- 新店开业 -->
 					<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
-					<NineYuanNewShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
+					<NewOpenShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
 					<!-- 全部门店 -->
 					<ShopList v-if="active === 2" :list="shopList" />
 				</view>
@@ -85,10 +84,14 @@
 		ref
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
-	import NineYuanNewShop from './component/NineYuanNewShop.vue';
+	import NewOpenShop from './component/NewOpenShop.vue';
+	// 全局状态-------------------------
+	import { useShopStore } from '../../store';
+	const shopStore = useShopStore();
+	const pageCategory = ref(shopStore.pageCategory);
 	// ---------------------------------------------------------------------------------------------------
 	// 当前页面类型 （全部|冰箱贴|茶坊|24小时营业）
-	const pageCategory = ref('all')
+	// const pageCategory = ref('default')
 
 
 	//控制骨架屏/加载gif
@@ -164,7 +167,6 @@
 
 
 
-
 	//点击搜索框
 	const clickSearchArea = () => {
 		uni.navigateTo({
@@ -181,7 +183,7 @@
 	// ---------------------------------------------------------------------------------------------------
 	onLoad((option) => {
 		console.log(option);
-		pageCategory.value = String(option.category);
+		// pageCategory.value = String(option.category);
 
 		console.log('Selected city ID（主动选择的城市id）:', option.selectedCityId);
 
