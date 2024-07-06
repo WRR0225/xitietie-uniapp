@@ -65,10 +65,10 @@
 		}
 	}, 1000)
 
-	//门店项点击事件
+	//门店搜索结果项点击事件
 	const shopCardClick = (item) => {
 		uni.navigateTo({
-			url: `/pages/shop-info/shop-info?shopId=${item.id}`
+			url: `/pages/shop-info/shop-info?shopId=${item.id}&isOverseas=${item.is_overseas}`
 		});
 	}
 </script>
