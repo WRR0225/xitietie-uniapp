@@ -31,6 +31,13 @@
 							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
 								:padding="tagpadding">开业4-7天</fui-tag>
 						</view>
+						<!-- 试营业88折 -->
+						<view class="second-half" v-if="item.label==='试营业88折'">
+							<fui-tag background='#8d8d8d' color="#ffffff" :padding="tagpadding"
+								style="margin-right: 6px;">{{item.label}}</fui-tag>
+					<!-- 		<fui-tag background='#5e5e5e' color="#ffffff"
+								:padding="tagpadding"></fui-tag> -->
+						</view>
 
 					</view>
 					<!-- 地址 -->

@@ -16,20 +16,18 @@
 				喜茶·茶坊
 			</view>
 		</view>
+		
 		<view class="category-button" id="ice">
 			<view class="title">
 				制冰
 			</view>
-
 		</view>
-		<view class="category-button" id="more">
+		
+		<view class="category-button" id="allday">
 			<view class="title">
-				更多
+				24小时营业
 			</view>
-
 		</view>
-
-
 	</view>
 
 </template>
@@ -82,7 +80,7 @@
 
 			.title {
 				margin: 6px 0 0 8px;
-				font-size: 20px;
+				font-size: 16px;
 
 				position: relative;
 				z-index: 1;
@@ -134,7 +132,7 @@
 		background-color: #d4d4d4;
 	}
 
-	#more {
+	#allday {
 		grid-row: 2 / 3;
 		grid-column: 5 / 7;
 		/* 占据后两个单元格 */

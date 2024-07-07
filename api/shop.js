@@ -2,6 +2,9 @@ import {
 	http
 } from '@/utils/http'
 
+const AUTHORIZATION_TOKEN =
+	'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMzQ0MTcxLCJuYmYiOjE3MjAzNDQxNzEsImV4cCI6MTcyMDQzMDU3MSwiaXNzIjoiaGV5dGVhIn0.sSLWwQADM4XL2yePykhH-SKIaH5ooxYlTHd1utixwj8'
+
 /**
  * 获取联名菜单数据
  */
@@ -87,7 +90,7 @@ export const postShopMenuAPI = (shopId) => {
 			// "level": 3
 		},
 		header: {
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMjU0MjMwLCJuYmYiOjE3MjAyNTQyMzAsImV4cCI6MTcyMDM0MDYzMCwiaXNzIjoiaGV5dGVhIn0.JO62E3QVqe4A96v3njVcXWkcLucgIwNNoadl01xwlnA'
+			'Authorization': AUTHORIZATION_TOKEN
 		}
 	})
 }
@@ -110,7 +113,7 @@ export const postOverseasShopMenuAPI = (shopId) => {
 			// "level": 3
 		},
 		header: {
-			'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwMjU0MjMwLCJuYmYiOjE3MjAyNTQyMzAsImV4cCI6MTcyMDM0MDYzMCwiaXNzIjoiaGV5dGVhIn0.JO62E3QVqe4A96v3njVcXWkcLucgIwNNoadl01xwlnA'
+			'Authorization': AUTHORIZATION_TOKEN
 		}
 	})
 }

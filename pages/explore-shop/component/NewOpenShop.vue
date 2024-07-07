@@ -122,13 +122,16 @@
 		}
 		// 对数组进行排序，将带有“9元喝”标签的数据排在前面，“第二杯半价”的排在后面
 		newOpenShops.value.sort((a, b) => {
-			if (a.label === '9元喝' && b.label !== '9元喝') {
-				return -1;
-			}
-			if (a.label !== '9元喝' && b.label === '9元喝') {
-				return 1;
-			}
-			return 0;
+			const priority = {
+				'9元喝': 1,
+				'买一送一': 2,
+				'第二杯半价': 3,
+				'试营业88折': 4
+			};
+			const aPriority = priority[a.label] || 5; // 默认优先级为5（未定义的标签）,优先级数值越小，排列越靠前。
+			const bPriority = priority[b.label] || 5;
+
+			return aPriority - bPriority;
 		});
 		// const results = await Promise.all(props.openshops.map(async (shop) => {
 		// 	const hasLabel = await checkShopForLabel(shop.id);
@@ -202,12 +205,16 @@
 						return {
 							label: '买一送一'
 						};
-					}else if (rule.label === '第二杯半价') {
+					} else if (rule.label === '第二杯半价') {
 						return {
 							label: '第二杯半价'
 						};
+					} else if (rule.label === '试营业88折') {
+						return {
+							label: '试营业88折'
+						};
 					}
-					
+
 				}
 			}
 		}
