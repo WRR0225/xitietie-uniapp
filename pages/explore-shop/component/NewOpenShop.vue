@@ -1,5 +1,6 @@
 <template>
-	<view class="card-flex-box">
+	<!-- 检索卡片 -->
+	<view class="card-flex-box" v-if="!isDataCached">
 		<view class="cue-card" v-if="cardVisible">
 			<view class="warning-image">
 				<img src="../img/warning.png" style="width: 64px;height: 64px;" />
@@ -15,25 +16,16 @@
 			</fui-button>
 		</view>
 	</view>
-	<!-- 	<view style="font-size: 20px;">
-		通过门店banner分析
-	</view>
-	<view v-if="targetTitle1">{{ targetTitle1 }}</view>
-	<view v-if="targetTitle2">{{ targetTitle2 }}</view>
-	<view v-if="targetTitle3">{{ targetTitle3 }}</view> -->
-	<!-- 	<view style="font-size: 20px;margin-top: 10px;">
-		通过菜单label分析
-	</view> -->
+
+	<!-- 检索结果和提示语 -->
 	<view class="found-message1">{{foundMessage}}</view>
 	<view class="found-message2" v-if="!cardVisible">
 		<view v-if="newOpenShops.length">
-			实际情况可在“喜茶GO”官方小程序内选择对应门店核实
+			<view>实际情况可在“喜茶GO”官方小程序内选择对应门店核实</view>
+			<view>查询结果会在当日24点前保留</view>
 		</view>
-		<view v-else>
-			可尝试对其他城市进行检索
-		</view>
+		<view v-else>可尝试对其他城市进行检索</view>
 	</view>
-
 	<view class="shoplist" v-if="!cardVisible">
 		<ShopList v-if="newOpenShops.length" :list="newOpenShops" />
 	</view>
@@ -45,7 +37,8 @@
 		ref
 	} from 'vue';
 	import {
-		onShow
+		onShow,
+		onLoad
 	} from '@dcloudio/uni-app';
 	import {
 		getShopBannerAPI,
@@ -54,7 +47,9 @@
 	} from '../../../api/shop';
 	import ShopList from './ShopList.vue';
 	import {
-		defineProps
+		defineProps,
+		defineExpose,
+		onMounted
 	} from 'vue';
 
 	const props = defineProps({
@@ -67,6 +62,12 @@
 			required: true
 		},
 	});
+
+	// 暴露方法给父组件使用
+	defineExpose({
+		checkCache,
+	});
+
 	//控制按钮显示
 	const cardVisible = ref(true);
 	// 搜索后的提示信息
@@ -77,8 +78,8 @@
 	const processedCount = ref(0);
 	//控制按钮文本
 	const isSearching = ref(false);
-
-
+	// 检查是否有缓存数据
+	const isDataCached = ref(false);
 
 	// 响应式变量来存储目标标题
 	// const targetTitle1 = ref('');
@@ -87,15 +88,53 @@
 
 	const handleClick = async () => {
 		isSearching.value = true;
-		await searchNineYuanShop();
+		await searchNewOpenShop();
 		cardVisible.value = false;
+		cacheSearchData(); // 缓存搜索数据
 		console.log(newOpenShops.value)
 	}
+
+	const cacheSearchData = () => {
+		const data = {
+			newOpenShops: newOpenShops.value,
+			foundMessage: foundMessage.value,
+			timestamp: new Date().getTime()
+		};
+		uni.setStorageSync(props.cityname, data);
+	};
+
+	const checkCache = () => {
+		const cachedData = uni.getStorageSync(props.cityname);
+		if (cachedData) {
+			const now = new Date().getTime();
+			const diff = now - cachedData.timestamp;
+			const oneDay = 24 * 60 * 60 * 1000;
+			if (diff < oneDay) {
+				newOpenShops.value = cachedData.newOpenShops;
+				foundMessage.value = cachedData.foundMessage;
+				cardVisible.value = false;
+				isDataCached.value = true;
+			} else {
+				uni.removeStorageSync(props.cityname);
+			}
+		}
+	};
+
+	onShow(() => {
+		checkCache();
+		console.log('onshow!')
+	});
+
+	onMounted(() => {
+		checkCache();
+		console.log('onMounted!')
+	});
+
 
 	//每组请求之间添加延迟
 	const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-	const searchNineYuanShop = async () => {
+	const searchNewOpenShop = async () => {
 		// getShopBannerData(shopId.value)
 		const batchSize = 10; // 每次发送10个请求
 		const delay = 500; // 0.5秒延迟
@@ -118,9 +157,11 @@
 			// 	icon: 'loading'
 			// });
 
-			await sleep(delay); // 添加延迟
+			// 添加延迟
+			await sleep(delay);
 		}
-		// 对数组进行排序，将带有“9元喝”标签的数据排在前面，“第二杯半价”的排在后面
+
+		// 对搜索结果进行排序
 		newOpenShops.value.sort((a, b) => {
 			const priority = {
 				'9元喝': 1,
@@ -133,15 +174,9 @@
 
 			return aPriority - bPriority;
 		});
-		// const results = await Promise.all(props.openshops.map(async (shop) => {
-		// 	const hasLabel = await checkShopForLabel(shop.id);
-		// 	return hasLabel ? shop : null;
-		// }));
-		// newOpenShops.value = results.filter(shop => shop !== null);
-		// console.log(newOpenShops.value)
-		// buttonVisible.value = false
+
 		if (newOpenShops.value.length > 0) {
-			foundMessage.value = `${props.cityname} 共找到${newOpenShops.value.length}家新开业门店`
+			foundMessage.value = `${props.cityname} 共找到${newOpenShops.value.length}家新开业&试营业门店`
 			console.log(foundMessage.value)
 		} else {
 			foundMessage.value = '当前城市暂无新开业3天内的门店'
@@ -183,7 +218,6 @@
 			const res = await postShopMenuAPI(id)
 			return checkForLabel(res.data);
 		}
-
 	}
 
 	const checkForLabel = (data) => {

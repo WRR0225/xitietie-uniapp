@@ -57,19 +57,17 @@
 					<!-- 待开业门店 -->
 					<ShopList v-if="active === 0" :list="closeShopList" />
 					<!-- 新店开业 -->
-					<!-- <ShopList v-if="active === 1" :list="openShopList" /> -->
 					<NewOpenShop v-if="active === 1" :openshops="openShopList" :cityname="cityName" />
 					<!-- 全部门店 -->
 					<ShopList v-if="active === 2" :list="shopList" />
 				</view>
-				
+
 				<view v-if="pageCategory === 'teahouse'">
-					茶坊门店
+					全部茶坊门店
 				</view>
 			</view>
 		</view>
 	</view>
-
 </template>
 
 <script setup lang="ts">
@@ -77,11 +75,11 @@
 		onLoad
 	} from '@dcloudio/uni-app';
 	import {
-		// getcomboMealMenuAPI,
 		postShopListAPI,
 	} from '@/api/shop';
 	import {
-		ref
+		ref,
+		watch
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
 	import NewOpenShop from './component/NewOpenShop.vue';
@@ -165,8 +163,6 @@
 	//tab默认选择
 	const active = ref(0)
 
-
-
 	//点击搜索框
 	const clickSearchArea = () => {
 		uni.navigateTo({
@@ -180,11 +176,19 @@
 			url: '/pages/explore-shop-index/explore-shop-index'
 		});
 	}
+	
+	// 获取NewOpenShop组件实例的引用
+	const newOpenShopRef = ref(null);
+
+	// 监听 active 的变化，调用子组件的方法
+	watch(active, (newVal) => {
+		if (newVal === 1 && newOpenShopRef.value) {
+			newOpenShopRef.value.checkCache();
+		}
+	});
+
 	// ---------------------------------------------------------------------------------------------------
 	onLoad((option) => {
-		console.log(option);
-		// pageCategory.value = String(option.category);
-
 		console.log('Selected city ID（主动选择的城市id）:', option.selectedCityId);
 
 		const selectedCityId = option.selectedCityId
@@ -192,6 +196,7 @@
 
 		// postShopListRes() 已放入setCity()
 	});
+	
 </script>
 
 <style scoped lang="scss">
