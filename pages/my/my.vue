@@ -5,9 +5,11 @@
 				<image class="avatar" :src=avatarUrl />
 			</button>
 		</view>
+
 		<view class="info">
 			<view class="nickname">
-				<input type="nickname" class="weui-input" placeholder="设置昵称" />
+				<input type="nickname" class="weui-input" :value="nickname" @input="updateNickname($event.target.value)"
+					@blur="saveUserInfo()" placeholder="设置昵称" />
 			</view>
 			<view class="id">
 				ID: 010225
@@ -50,22 +52,42 @@
 
 <script setup>
 	import {
-		ref
+		ref,
+		onMounted
 	} from 'vue'
 
 	const defaultAvatarUrl =
 		'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 	const avatarUrl = ref(defaultAvatarUrl)
 
+	const nickname = ref('')
+
 	function onChooseAvatar(e) {
 		const {
 			avatarUrl: newAvatarUrl
 		} = e.detail
 		avatarUrl.value = newAvatarUrl
+		saveUserInfo()
+	}
+
+	function updateNickname(value) {
+		nickname.value = value
+	}
+
+	function saveUserInfo() {
+		uni.setStorage({
+			key: 'userInfo',
+			data: {
+				avatarUrl: avatarUrl.value,
+				nickname: nickname.value
+			},
+			success: function() {
+				console.log('用户信息保存成功')
+			}
+		})
 	}
 
 	const openSettingHandleClick = () => {
-		console.log('click!')
 		wx.openSetting({
 			withSubscriptions: true,
 			success(res) {
@@ -80,6 +102,21 @@
 			}
 		})
 	}
+
+	onMounted(() => {
+		// 从本地存储中获取昵称和头像地址，如果有的话
+		uni.getStorage({
+			key: 'userInfo',
+			success: function(res) {
+				const {
+					avatarUrl: storedAvatarUrl,
+					nickname: storedNickname
+				} = res.data
+				avatarUrl.value = storedAvatarUrl || defaultAvatarUrl
+				nickname.value = storedNickname || ''
+			}
+		})
+	})
 </script>
 
 <style lang='scss'>
