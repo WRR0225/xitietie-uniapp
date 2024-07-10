@@ -63,11 +63,6 @@
 		},
 	});
 
-	// 暴露方法给父组件使用
-	defineExpose({
-		checkCache,
-	});
-
 	//控制按钮显示
 	const cardVisible = ref(true);
 	// 搜索后的提示信息
@@ -104,6 +99,7 @@
 	};
 
 	const checkCache = () => {
+		console.log('checkCache!')
 		const cachedData = uni.getStorageSync(props.cityname);
 		if (cachedData) {
 			const now = new Date().getTime();
@@ -121,13 +117,13 @@
 	};
 
 	onShow(() => {
-		checkCache();
+		// checkCache();
 		console.log('onshow!')
 	});
 
 	onMounted(() => {
-		checkCache();
 		console.log('onMounted!')
+		checkCache();
 	});
 
 

@@ -4,8 +4,11 @@
 			<view class="back" @click="switchTab">
 				<uni-icons type="left" size="24"></uni-icons>
 			</view>
-			<view class="title">
+			<view class="title" v-if="pageCategory === 'default'">
 				探索门店
+			</view>
+			<view class="title" v-if="pageCategory === 'teahouse'">
+				全国茶坊门店
 			</view>
 			<view class="placeholder">
 				<!-- 占位 -->
@@ -63,7 +66,7 @@
 				</view>
 
 				<view v-if="pageCategory === 'teahouse'">
-					全部茶坊门店
+					<ShopList :list="teaHouseShopList"></ShopList>
 				</view>
 			</view>
 		</view>
@@ -78,8 +81,7 @@
 		postShopListAPI,
 	} from '@/api/shop';
 	import {
-		ref,
-		watch
+		ref
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
 	import NewOpenShop from './component/NewOpenShop.vue';
@@ -118,7 +120,7 @@
 	const cityName = ref('')
 	const closeShopList = ref([])
 	const openShopList = ref([])
-	// const tryRunShopList = ref([])
+	const teaHouseShopList = ref([])
 
 	// 处理接口返回数据，确保符合ShopItem类型及符合v-for遍历结构
 	const processShopListData = (data) => {
@@ -128,7 +130,9 @@
 			address: item.address,
 			is_open: item.is_open,
 			closed_label: item.closed_label,
-			is_overseas: item.is_overseas
+			is_overseas: item.is_overseas,
+			is_tea_house: item.is_tea_house,
+			is_all_day: item.all_business_time_list[0].isAllDay
 		}));
 	};
 
@@ -138,6 +142,7 @@
 		cityName.value = res.data.list[0].city
 		closeShopList.value = shopList.value.filter(item => item.is_open === false);
 		openShopList.value = shopList.value.filter(item => item.is_open === true);
+		// teaHouseShopList.value = shopList.value.filter(item => item.is_tea_house === true);
 		//请求到数据后销毁骨架屏
 		isLoading.value = false
 
@@ -176,27 +181,13 @@
 			url: '/pages/explore-shop-index/explore-shop-index'
 		});
 	}
-	
-	// 获取NewOpenShop组件实例的引用
-	const newOpenShopRef = ref(null);
-
-	// 监听 active 的变化，调用子组件的方法
-	watch(active, (newVal) => {
-		if (newVal === 1 && newOpenShopRef.value) {
-			newOpenShopRef.value.checkCache();
-		}
-	});
 
 	// ---------------------------------------------------------------------------------------------------
 	onLoad((option) => {
 		console.log('Selected city ID（主动选择的城市id）:', option.selectedCityId);
-
 		const selectedCityId = option.selectedCityId
 		setCity(selectedCityId);
-
-		// postShopListRes() 已放入setCity()
 	});
-	
 </script>
 
 <style scoped lang="scss">

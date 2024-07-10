@@ -14,14 +14,14 @@
 					<view class="text">
 						筛选
 					</view>
-					<img class="icon" src="../static/Funnel.png" />
+					<img class="icon" src="../../static/Funnel.png"
 				</view>
 			</view>
 			<scroll-view class="scroll-view" scroll-y="true">
 				<view class="tietie-card-box">
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/杭州.png" class="image" />
+							<img src="../../static/杭州.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -31,7 +31,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/广州.png" class="image" />
+							<img src="../../static/广州.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -41,7 +41,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/六盘水.png" class="image" />
+							<img src="../../static/六盘水.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -51,7 +51,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -61,7 +61,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -71,7 +71,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -81,7 +81,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -91,7 +91,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -101,7 +101,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">
@@ -111,7 +111,7 @@
 					</view>
 					<view class="tietie-card">
 						<view class="up">
-							<img src="../static/上海1.png" class="image" />
+							<img src="../../static/上海1.png" class="image" />
 						</view>
 						<view class="down">
 							<view class="text">

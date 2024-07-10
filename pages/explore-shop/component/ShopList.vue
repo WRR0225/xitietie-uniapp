@@ -35,11 +35,19 @@
 						<view class="second-half" v-if="item.label==='试营业88折'">
 							<fui-tag background='#8d8d8d' color="#ffffff" :padding="tagpadding"
 								style="margin-right: 6px;">{{item.label}}</fui-tag>
-					<!-- 		<fui-tag background='#5e5e5e' color="#ffffff"
-								:padding="tagpadding"></fui-tag> -->
 						</view>
-
 					</view>
+					<!-- 茶坊门店 -->
+					<view class="teahouse" v-if="item.is_tea_house === true">
+						<fui-tag background='rgba(151, 247, 7, 0.2)' color="#71d004" :padding="tagpadding"
+							style="margin-right: 6px;">茶坊</fui-tag>
+					</view>
+					<!-- 24小时营业门店  -->
+					<view class="teahouse" v-if="item.is_all_day === true">
+						<fui-tag background='rgba(208, 174, 255, 0.2)' color="#6831FF" :padding="tagpadding"
+							style="margin-right: 6px;">24小时营业</fui-tag>
+					</view>
+					
 					<!-- 地址 -->
 					<view class="address">
 						<uni-icons type="location" size="17" />
