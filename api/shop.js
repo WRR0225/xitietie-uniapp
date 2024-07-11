@@ -3,9 +3,8 @@ import {
 } from '@/utils/http'
 
 const AUTHORIZATION_TOKEN =
-	'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwNTcwMTU2LCJuYmYiOjE3MjA1NzAxNTYsImV4cCI6MTcyMDY1NjU1NiwiaXNzIjoiaGV5dGVhIn0.R0uV_zeOtwT0Kfs5qZsff_tINKAZvnfF0cVwMRBzz10'
+	'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzMDY0MTEiLCJ1c2VyX21haW5faWQiOjEzMTU1ODY3MiwiY2hhbm5lbCI6IlciLCJzb3VyY2UiOiJhcGkiLCJpc19ndWVzdCI6ZmFsc2UsImxhYmVsIjoiY2xpZW50OndlYXBwIiwiaWF0IjoxNzIwNjk4ODU3LCJuYmYiOjE3MjA2OTg4NTcsImV4cCI6MTcyMDc4NTI1NywiaXNzIjoiaGV5dGVhIn0.pDuPvM5RGU2JcxiW8N6Z0ZbOLENVKnOYoGcGHgp_ZYo'
 
-	
 /**
  * 获取联名菜单数据
  */
@@ -116,5 +115,15 @@ export const postOverseasShopMenuAPI = (shopId) => {
 		header: {
 			'Authorization': AUTHORIZATION_TOKEN
 		}
+	})
+}
+
+/**
+ * 点单页-分类信息
+ */
+export const postShopProductCategoryAPI = (shopId) => {
+	return http({
+		method: 'GET',
+		url: `/api/service-menu/grayapi/shop/categories?shopId=${shopId}&isTakeaway=0`,
 	})
 }

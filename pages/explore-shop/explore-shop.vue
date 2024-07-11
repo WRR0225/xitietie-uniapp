@@ -7,8 +7,8 @@
 			<view class="title" v-if="pageCategory === 'default'">
 				探索门店
 			</view>
-			<view class="title" v-if="pageCategory === 'teahouse'">
-				全国茶坊门店
+			<view class="title" v-if="pageCategory === 'ice'">
+				手炒冰
 			</view>
 			<view class="placeholder">
 				<!-- 占位 -->
@@ -24,7 +24,7 @@
 			    }" :data="tablist" v-model="active" height="44">
 				</zb-tab>
 			</view>
-			<view v-if="pageCategory === 'teahouse'"></view>
+			<!-- <view v-if="pageCategory === 'ice'"></view> -->
 		</view>
 
 		<!-- 城市门店加载完成前的东西 -->
@@ -33,7 +33,7 @@
 		</view>
 		<view v-else>
 			<!-- 城市选择器 -->
-			<view v-if="pageCategory === 'default'">
+			<view>
 				<view class="navbar-diy">
 					<view class="left">
 						<navigator url="/pages/city-index/city-index" open-type="navigate">
@@ -65,8 +65,8 @@
 					<ShopList v-if="active === 2" :list="shopList" />
 				</view>
 
-				<view v-if="pageCategory === 'teahouse'">
-					<ShopList :list="teaHouseShopList"></ShopList>
+				<view v-if="pageCategory === 'ice'">
+					<IceShop />
 				</view>
 			</view>
 		</view>
@@ -85,6 +85,7 @@
 	} from 'vue';
 	import ShopList from './component/ShopList.vue';
 	import NewOpenShop from './component/NewOpenShop.vue';
+	import IceShop from './component/IceShop.vue';
 	// 全局状态-------------------------
 	import { useShopStore } from '../../store';
 	const shopStore = useShopStore();
@@ -120,7 +121,7 @@
 	const cityName = ref('')
 	const closeShopList = ref([])
 	const openShopList = ref([])
-	const teaHouseShopList = ref([])
+	// const teaHouseShopList = ref([])
 
 	// 处理接口返回数据，确保符合ShopItem类型及符合v-for遍历结构
 	const processShopListData = (data) => {

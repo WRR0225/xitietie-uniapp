@@ -1,6 +1,6 @@
 <template>
 	<view v-if="list.length">
-		<view v-for="item in list" :key="item.id" class="item">
+		<view class="item" v-for="item in list" :key="item.id">
 			<view class="info-box">
 				<view class="info" @click="shopCardClick(item)">
 					<!-- <view style="color: red;">id:{{ item.id }}</view> -->
@@ -11,43 +11,44 @@
 						<uni-icons type="right" size="15" />
 					</view>
 					<!-- 标签 -->
-					<!-- 待开业 -->
-					<view class="label" v-if="item.is_open==false">
-						<view class="text">{{item.closed_label}}</view>
-					</view>
-					<!-- 试营业 | 9元喝&买一送一 | 第二杯半价 -->
-					<view class="new-shop-label" v-if="item.label">
-						<!-- 9元喝&买一送一 -->
-						<view class="nine-yuan" v-if="item.label==='9元喝'||item.label==='买一送一'">
-							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f" :padding="tagpadding"
-								style="margin-right: 6px;">{{item.label}}</fui-tag>
-							<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
-								:padding="tagpadding">开业1-3天</fui-tag>
+					<view class="label-container">
+						<!-- 待开业 -->
+						<view class="label" v-if="item.is_open==false">
+							<view class="text">{{item.closed_label}}</view>
 						</view>
-						<!-- 第二杯半价 -->
-						<view class="second-half" v-if="item.label==='第二杯半价'">
-							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703" :padding="tagpadding"
-								style="margin-right: 6px;">{{item.label}}</fui-tag>
-							<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
-								:padding="tagpadding">开业4-7天</fui-tag>
+						<!-- 试营业 | 9元喝&买一送一 | 第二杯半价 -->
+						<view class="new-shop-label" v-if="item.label">
+							<!-- 9元喝&买一送一 -->
+							<view class="nine-yuan" v-if="item.label==='9元喝'||item.label==='买一送一'">
+								<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f" :padding="tagpadding"
+									style="margin-right: 6px;">{{item.label}}</fui-tag>
+								<fui-tag background='rgba(9, 190, 79, .05)' color="#09be4f"
+									:padding="tagpadding" style="margin-right: 6px;">开业1-3天</fui-tag>
+							</view>
+							<!-- 第二杯半价 -->
+							<view class="second-half" v-if="item.label==='第二杯半价'">
+								<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703" :padding="tagpadding"
+									style="margin-right: 6px;">{{item.label}}</fui-tag>
+								<fui-tag background='rgba(255, 183, 3, .1)' color="#ffb703"
+									:padding="tagpadding" style="margin-right: 6px;">开业4-7天</fui-tag>
+							</view>
+							<!-- 试营业88折 -->
+							<view class="second-half" v-if="item.label==='试营业88折'">
+								<fui-tag background='#8d8d8d' color="#ffffff" :padding="tagpadding"
+									style="margin-right: 6px;">{{item.label}}</fui-tag>
+							</view>
 						</view>
-						<!-- 试营业88折 -->
-						<view class="second-half" v-if="item.label==='试营业88折'">
-							<fui-tag background='#8d8d8d' color="#ffffff" :padding="tagpadding"
-								style="margin-right: 6px;">{{item.label}}</fui-tag>
+						<!-- 茶坊门店 -->
+						<view class="teahouse" v-if="item.is_tea_house === true">
+							<fui-tag background='rgba(151, 247, 7, 0.2)' color="#71d004" :padding="tagpadding"
+								style="margin-right: 6px;">茶坊</fui-tag>
+						</view>
+						<!-- 24小时营业门店  -->
+						<view class="teahouse" v-if="item.is_all_day === true">
+							<fui-tag background='rgba(208, 174, 255, 0.2)' color="#6831FF" :padding="tagpadding"
+								style="margin-right: 6px;">24小时营业</fui-tag>
 						</view>
 					</view>
-					<!-- 茶坊门店 -->
-					<view class="teahouse" v-if="item.is_tea_house === true">
-						<fui-tag background='rgba(151, 247, 7, 0.2)' color="#71d004" :padding="tagpadding"
-							style="margin-right: 6px;">茶坊</fui-tag>
-					</view>
-					<!-- 24小时营业门店  -->
-					<view class="teahouse" v-if="item.is_all_day === true">
-						<fui-tag background='rgba(208, 174, 255, 0.2)' color="#6831FF" :padding="tagpadding"
-							style="margin-right: 6px;">24小时营业</fui-tag>
-					</view>
-					
 					<!-- 地址 -->
 					<view class="address">
 						<uni-icons type="location" size="17" />
@@ -122,16 +123,21 @@
 					font-size: 17px;
 				}
 
-				.label {
+				.label-container {
 					display: flex;
 
-					.text {
-						color: #f89b0f;
-						font-size: 13px;
-						// background-color: #eeeff8;
-						padding: 2px;
+					.label {
+						display: flex;
+
+						.text {
+							color: #f89b0f;
+							font-size: 13px;
+							// background-color: #eeeff8;
+							padding: 2px;
+						}
 					}
 				}
+
 
 				.address {
 					display: flex;
