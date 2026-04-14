@@ -28,10 +28,10 @@
 		</view>
 
 		<!-- 城市门店加载完成前的东西 -->
-		<view v-if="isLoading" style="font-size: 100px;">
+<!-- 		<view v-if="isLoading" style="font-size: 100px;">
 			加载中...
-		</view>
-		<view v-else>
+		</view> -->
+		<view>
 			<!-- 城市选择器 -->
 			<view>
 				<view class="navbar-diy">
@@ -98,12 +98,9 @@
 	//控制骨架屏/加载gif
 	const isLoading = ref(true)
 
-	//未选择城市时的默认参数
+	//未选择城市时的默认参数-默认城市：深圳
 	const postShopListParam = ref({
-		country_code: '156',
-		//深圳
 		city_code: '156440300'
-		// userLocation: "120.29850006103516,30.418750762939453"
 	})
 
 	//选择城市
@@ -133,7 +130,9 @@
 			closed_label: item.closed_label,
 			is_overseas: item.is_overseas,
 			is_tea_house: item.is_tea_house,
-			is_all_day: item.all_business_time_list[0].isAllDay
+			is_all_day: item.all_business_time_list && item.all_business_time_list[0] 
+			            ? item.all_business_time_list[0].isAllDay 
+			            : false
 		}));
 	};
 
@@ -148,7 +147,7 @@
 		isLoading.value = false
 
 		console.log(shopList.value);
-		console.log(openShopList.value);
+		// console.log(openShopList.value);
 	}
 
 

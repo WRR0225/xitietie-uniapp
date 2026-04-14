@@ -26,7 +26,7 @@
 </template>
 
 
-<script setup lang="ts">
+<script setup>
 	import _ from 'lodash'
 	import { postShopSearchAPI } from '../../api/shop';
 	import { ref } from 'vue';

@@ -73,7 +73,7 @@
 
 </template>
 
-<script setup lang="ts">
+<script setup>
 	const tagpadding = ['12rpx', '26rpx']
 	const props = defineProps({
 		list: {

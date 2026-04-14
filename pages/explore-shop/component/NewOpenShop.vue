@@ -22,7 +22,7 @@
 	<view class="found-message2" v-if="!cardVisible">
 		<view v-if="newOpenShops.length">
 			<view>实际情况可在“喜茶GO”官方小程序内选择对应门店核实</view>
-			<view>查询结果会在当日24点前保留</view>
+			<view style="margin-top: 4px;">查询结果会在当日24点前保留</view>
 		</view>
 		<view v-else>可尝试对其他城市进行检索</view>
 	</view>
